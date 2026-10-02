@@ -435,30 +435,36 @@
 <body>
   <div class="container">
     <header class="app-header">
-      <h1>中文 · Práctica de chino</h1>
-      <p class="subtitle">Practicá frases de chino con <strong>hanzi + pinyin desde el inicio</strong>, audio en chino y repaso de las frases que cuestan más.</p>
+      <h1>🇨🇳 中文 · Práctica de chino</h1>
+      <p class="subtitle">Practicá <strong>vocabulario y frases HSK 1</strong> con hanzi + pinyin desde el inicio, audio en chino y repaso de lo que cuesta más.</p>
     </header>
 
     <section id="screen-home" class="panel">
       <h2>Práctica disponible</h2>
-      <p id="home-subtitle" class="subtitle">Elegí tarjetas o reconocimiento auditivo y después seleccioná una o ambas lecciones.</p>
+      <p id="home-subtitle" class="subtitle">Elegí vocabulario, frases o reconocimiento auditivo y después seleccioná el material que querés practicar.</p>
 
       <div class="practice-type-row" id="practice-type-row">
-        <label class="practice-type-card active" data-practice-type="cards">
+        <label class="practice-type-card active" data-practice-type="vocab">
           <div>
-            <div class="practice-type-title"><input type="radio" name="practiceType" value="cards" checked>Tarjetas</div>
+            <div class="practice-type-title"><input type="radio" name="practiceType" value="vocab" checked>🀄 Vocabulario HSK 1</div>
+            <div class="lesson-meta">150 palabras divididas en 15 lotes de 10, con hanzi, pinyin, audio y ejemplo.</div>
+          </div>
+        </label>
+        <label class="practice-type-card" data-practice-type="cards">
+          <div>
+            <div class="practice-type-title"><input type="radio" name="practiceType" value="cards">💬 Frases HSK 1</div>
             <div class="lesson-meta">Frases con hanzi y pinyin visibles desde el inicio, más audio y traducción.</div>
           </div>
         </label>
         <label class="practice-type-card" data-practice-type="audio">
           <div>
-            <div class="practice-type-title"><input type="radio" name="practiceType" value="audio">Audios</div>
+            <div class="practice-type-title"><input type="radio" name="practiceType" value="audio">🎧 Reconocimiento por audio</div>
             <div class="lesson-meta">Escuchás una frase y tratás de reconocerla antes de ver la respuesta.</div>
           </div>
         </label>
       </div>
 
-      <p id="lessons-helper" class="subtitle" style="margin-top: 18px;">Las dos lecciones pueden practicarse como tarjetas o solo por audio.</p>
+      <p id="lessons-helper" class="subtitle" style="margin-top: 18px;">Elegí vocabulario, frases o reconocimiento auditivo. En vocabulario podés seleccionar uno o varios lotes de 10 palabras.</p>
       <div id="lessons-grid" class="lessons-grid"></div>
       <div class="controls" style="justify-content:flex-start; margin-top: 20px;">
         <button id="btn-start" class="btn-primary">Comenzar</button>
@@ -573,6 +579,1478 @@
 
   <script>
     const APP_DATA = {
+  "vocabularyLessons": [
+  {
+    "id": "hsk01-vocab-01",
+    "title": "HSK 1 · Lote 1: Base esencial",
+    "description": "Pronombres y estructuras básicas",
+    "preview": "我 · 你 · 他 · 她 · 我们 · 是 · 有 · 叫 · 好 · 很",
+    "items": [
+      {
+        "id": "hsk01-v01-01",
+        "hanzi": "我",
+        "pinyin": "wǒ",
+        "meaning": "yo",
+        "example_hanzi": "我是学生。",
+        "example_pinyin": "Wǒ shì xuésheng.",
+        "example_es": "Soy estudiante."
+      },
+      {
+        "id": "hsk01-v01-02",
+        "hanzi": "你",
+        "pinyin": "nǐ",
+        "meaning": "vos / tú",
+        "example_hanzi": "你好吗？",
+        "example_pinyin": "Nǐ hǎo ma?",
+        "example_es": "¿Cómo estás?"
+      },
+      {
+        "id": "hsk01-v01-03",
+        "hanzi": "他",
+        "pinyin": "tā",
+        "meaning": "él",
+        "example_hanzi": "他是老师。",
+        "example_pinyin": "Tā shì lǎoshī.",
+        "example_es": "Él es profesor."
+      },
+      {
+        "id": "hsk01-v01-04",
+        "hanzi": "她",
+        "pinyin": "tā",
+        "meaning": "ella",
+        "example_hanzi": "她是学生。",
+        "example_pinyin": "Tā shì xuésheng.",
+        "example_es": "Ella es estudiante."
+      },
+      {
+        "id": "hsk01-v01-05",
+        "hanzi": "我们",
+        "pinyin": "wǒmen",
+        "meaning": "nosotros",
+        "example_hanzi": "我们学习汉语。",
+        "example_pinyin": "Wǒmen xuéxí Hànyǔ.",
+        "example_es": "Estudiamos chino."
+      },
+      {
+        "id": "hsk01-v01-06",
+        "hanzi": "是",
+        "pinyin": "shì",
+        "meaning": "ser",
+        "example_hanzi": "我是中国人。",
+        "example_pinyin": "Wǒ shì Zhōngguó rén.",
+        "example_es": "Soy chino/a."
+      },
+      {
+        "id": "hsk01-v01-07",
+        "hanzi": "有",
+        "pinyin": "yǒu",
+        "meaning": "tener / haber",
+        "example_hanzi": "我有一个女儿。",
+        "example_pinyin": "Wǒ yǒu yí ge nǚ'ér.",
+        "example_es": "Tengo una hija."
+      },
+      {
+        "id": "hsk01-v01-08",
+        "hanzi": "叫",
+        "pinyin": "jiào",
+        "meaning": "llamarse / llamar",
+        "example_hanzi": "我叫李明。",
+        "example_pinyin": "Wǒ jiào Lǐ Míng.",
+        "example_es": "Me llamo Li Ming."
+      },
+      {
+        "id": "hsk01-v01-09",
+        "hanzi": "好",
+        "pinyin": "hǎo",
+        "meaning": "bueno / bien",
+        "example_hanzi": "我很好。",
+        "example_pinyin": "Wǒ hěn hǎo.",
+        "example_es": "Estoy muy bien."
+      },
+      {
+        "id": "hsk01-v01-10",
+        "hanzi": "很",
+        "pinyin": "hěn",
+        "meaning": "muy",
+        "example_hanzi": "她很好。",
+        "example_pinyin": "Tā hěn hǎo.",
+        "example_es": "Ella está muy bien."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-02",
+    "title": "HSK 1 · Lote 2: Personas y familia",
+    "description": "Familia, estudio y trato personal",
+    "preview": "爸爸 · 妈妈 · 儿子 · 女儿 · 朋友 · 老师 · 学生 · 同学 · 先生 · 小姐",
+    "items": [
+      {
+        "id": "hsk01-v02-01",
+        "hanzi": "爸爸",
+        "pinyin": "bàba",
+        "meaning": "papá",
+        "example_hanzi": "我爱爸爸。",
+        "example_pinyin": "Wǒ ài bàba.",
+        "example_es": "Quiero a papá."
+      },
+      {
+        "id": "hsk01-v02-02",
+        "hanzi": "妈妈",
+        "pinyin": "māma",
+        "meaning": "mamá",
+        "example_hanzi": "妈妈在家。",
+        "example_pinyin": "Māma zài jiā.",
+        "example_es": "Mamá está en casa."
+      },
+      {
+        "id": "hsk01-v02-03",
+        "hanzi": "儿子",
+        "pinyin": "érzi",
+        "meaning": "hijo",
+        "example_hanzi": "他有一个儿子。",
+        "example_pinyin": "Tā yǒu yí ge érzi.",
+        "example_es": "Él tiene un hijo."
+      },
+      {
+        "id": "hsk01-v02-04",
+        "hanzi": "女儿",
+        "pinyin": "nǚ'ér",
+        "meaning": "hija",
+        "example_hanzi": "我有一个女儿。",
+        "example_pinyin": "Wǒ yǒu yí ge nǚ'ér.",
+        "example_es": "Tengo una hija."
+      },
+      {
+        "id": "hsk01-v02-05",
+        "hanzi": "朋友",
+        "pinyin": "péngyou",
+        "meaning": "amigo/a",
+        "example_hanzi": "他是我的朋友。",
+        "example_pinyin": "Tā shì wǒ de péngyou.",
+        "example_es": "Él es mi amigo."
+      },
+      {
+        "id": "hsk01-v02-06",
+        "hanzi": "老师",
+        "pinyin": "lǎoshī",
+        "meaning": "profesor/a",
+        "example_hanzi": "王老师很好。",
+        "example_pinyin": "Wáng lǎoshī hěn hǎo.",
+        "example_es": "El profesor Wang es muy bueno."
+      },
+      {
+        "id": "hsk01-v02-07",
+        "hanzi": "学生",
+        "pinyin": "xuésheng",
+        "meaning": "estudiante",
+        "example_hanzi": "我是学生。",
+        "example_pinyin": "Wǒ shì xuésheng.",
+        "example_es": "Soy estudiante."
+      },
+      {
+        "id": "hsk01-v02-08",
+        "hanzi": "同学",
+        "pinyin": "tóngxué",
+        "meaning": "compañero/a de clase",
+        "example_hanzi": "她是我的同学。",
+        "example_pinyin": "Tā shì wǒ de tóngxué.",
+        "example_es": "Ella es mi compañera de clase."
+      },
+      {
+        "id": "hsk01-v02-09",
+        "hanzi": "先生",
+        "pinyin": "xiānsheng",
+        "meaning": "señor",
+        "example_hanzi": "王先生，你好。",
+        "example_pinyin": "Wáng xiānsheng, nǐ hǎo.",
+        "example_es": "Señor Wang, hola."
+      },
+      {
+        "id": "hsk01-v02-10",
+        "hanzi": "小姐",
+        "pinyin": "xiǎojie",
+        "meaning": "señorita",
+        "example_hanzi": "李小姐是老师。",
+        "example_pinyin": "Lǐ xiǎojie shì lǎoshī.",
+        "example_es": "La señorita Li es profesora."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-03",
+    "title": "HSK 1 · Lote 3: Números",
+    "description": "Los números del uno al diez",
+    "preview": "一 · 二 · 三 · 四 · 五 · 六 · 七 · 八 · 九 · 十",
+    "items": [
+      {
+        "id": "hsk01-v03-01",
+        "hanzi": "一",
+        "pinyin": "yī",
+        "meaning": "uno",
+        "example_hanzi": "我有一个苹果。",
+        "example_pinyin": "Wǒ yǒu yí ge píngguǒ.",
+        "example_es": "Tengo una manzana."
+      },
+      {
+        "id": "hsk01-v03-02",
+        "hanzi": "二",
+        "pinyin": "èr",
+        "meaning": "dos",
+        "example_hanzi": "今天是二号。",
+        "example_pinyin": "Jīntiān shì èr hào.",
+        "example_es": "Hoy es día 2."
+      },
+      {
+        "id": "hsk01-v03-03",
+        "hanzi": "三",
+        "pinyin": "sān",
+        "meaning": "tres",
+        "example_hanzi": "我买三个苹果。",
+        "example_pinyin": "Wǒ mǎi sān ge píngguǒ.",
+        "example_es": "Compro tres manzanas."
+      },
+      {
+        "id": "hsk01-v03-04",
+        "hanzi": "四",
+        "pinyin": "sì",
+        "meaning": "cuatro",
+        "example_hanzi": "现在四点。",
+        "example_pinyin": "Xiànzài sì diǎn.",
+        "example_es": "Ahora son las cuatro."
+      },
+      {
+        "id": "hsk01-v03-05",
+        "hanzi": "五",
+        "pinyin": "wǔ",
+        "meaning": "cinco",
+        "example_hanzi": "我下午五点回家。",
+        "example_pinyin": "Wǒ xiàwǔ wǔ diǎn huí jiā.",
+        "example_es": "Vuelvo a casa a las cinco de la tarde."
+      },
+      {
+        "id": "hsk01-v03-06",
+        "hanzi": "六",
+        "pinyin": "liù",
+        "meaning": "seis",
+        "example_hanzi": "我六点回家。",
+        "example_pinyin": "Wǒ liù diǎn huí jiā.",
+        "example_es": "Vuelvo a casa a las seis."
+      },
+      {
+        "id": "hsk01-v03-07",
+        "hanzi": "七",
+        "pinyin": "qī",
+        "meaning": "siete",
+        "example_hanzi": "今天七号。",
+        "example_pinyin": "Jīntiān qī hào.",
+        "example_es": "Hoy es día 7."
+      },
+      {
+        "id": "hsk01-v03-08",
+        "hanzi": "八",
+        "pinyin": "bā",
+        "meaning": "ocho",
+        "example_hanzi": "现在八点。",
+        "example_pinyin": "Xiànzài bā diǎn.",
+        "example_es": "Ahora son las ocho."
+      },
+      {
+        "id": "hsk01-v03-09",
+        "hanzi": "九",
+        "pinyin": "jiǔ",
+        "meaning": "nueve",
+        "example_hanzi": "我九点去学校。",
+        "example_pinyin": "Wǒ jiǔ diǎn qù xuéxiào.",
+        "example_es": "Voy a la escuela a las nueve."
+      },
+      {
+        "id": "hsk01-v03-10",
+        "hanzi": "十",
+        "pinyin": "shí",
+        "meaning": "diez",
+        "example_hanzi": "这个十块钱。",
+        "example_pinyin": "Zhège shí kuài qián.",
+        "example_es": "Esto cuesta diez yuanes."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-04",
+    "title": "HSK 1 · Lote 4: Tiempo y fechas",
+    "description": "Días, momentos del día y calendario",
+    "preview": "今天 · 明天 · 昨天 · 现在 · 上午 · 中午 · 下午 · 星期 · 月 · 年",
+    "items": [
+      {
+        "id": "hsk01-v04-01",
+        "hanzi": "今天",
+        "pinyin": "jīntiān",
+        "meaning": "hoy",
+        "example_hanzi": "今天天气很好。",
+        "example_pinyin": "Jīntiān tiānqì hěn hǎo.",
+        "example_es": "Hoy hace muy buen tiempo."
+      },
+      {
+        "id": "hsk01-v04-02",
+        "hanzi": "明天",
+        "pinyin": "míngtiān",
+        "meaning": "mañana",
+        "example_hanzi": "明天我去学校。",
+        "example_pinyin": "Míngtiān wǒ qù xuéxiào.",
+        "example_es": "Mañana voy a la escuela."
+      },
+      {
+        "id": "hsk01-v04-03",
+        "hanzi": "昨天",
+        "pinyin": "zuótiān",
+        "meaning": "ayer",
+        "example_hanzi": "昨天我在家。",
+        "example_pinyin": "Zuótiān wǒ zài jiā.",
+        "example_es": "Ayer estuve en casa."
+      },
+      {
+        "id": "hsk01-v04-04",
+        "hanzi": "现在",
+        "pinyin": "xiànzài",
+        "meaning": "ahora",
+        "example_hanzi": "我现在学习汉语。",
+        "example_pinyin": "Wǒ xiànzài xuéxí Hànyǔ.",
+        "example_es": "Ahora estudio chino."
+      },
+      {
+        "id": "hsk01-v04-05",
+        "hanzi": "上午",
+        "pinyin": "shàngwǔ",
+        "meaning": "mañana (antes del mediodía)",
+        "example_hanzi": "我上午学习汉语。",
+        "example_pinyin": "Wǒ shàngwǔ xuéxí Hànyǔ.",
+        "example_es": "Estudio chino por la mañana."
+      },
+      {
+        "id": "hsk01-v04-06",
+        "hanzi": "中午",
+        "pinyin": "zhōngwǔ",
+        "meaning": "mediodía",
+        "example_hanzi": "我中午吃米饭。",
+        "example_pinyin": "Wǒ zhōngwǔ chī mǐfàn.",
+        "example_es": "Al mediodía como arroz."
+      },
+      {
+        "id": "hsk01-v04-07",
+        "hanzi": "下午",
+        "pinyin": "xiàwǔ",
+        "meaning": "tarde",
+        "example_hanzi": "我下午回家。",
+        "example_pinyin": "Wǒ xiàwǔ huí jiā.",
+        "example_es": "Vuelvo a casa por la tarde."
+      },
+      {
+        "id": "hsk01-v04-08",
+        "hanzi": "星期",
+        "pinyin": "xīngqī",
+        "meaning": "semana / día de la semana",
+        "example_hanzi": "今天星期一。",
+        "example_pinyin": "Jīntiān xīngqīyī.",
+        "example_es": "Hoy es lunes."
+      },
+      {
+        "id": "hsk01-v04-09",
+        "hanzi": "月",
+        "pinyin": "yuè",
+        "meaning": "mes",
+        "example_hanzi": "一年有十二个月。",
+        "example_pinyin": "Yì nián yǒu shí'èr ge yuè.",
+        "example_es": "Un año tiene doce meses."
+      },
+      {
+        "id": "hsk01-v04-10",
+        "hanzi": "年",
+        "pinyin": "nián",
+        "meaning": "año",
+        "example_hanzi": "我学习汉语一年了。",
+        "example_pinyin": "Wǒ xuéxí Hànyǔ yì nián le.",
+        "example_es": "Estudio chino desde hace un año."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-05",
+    "title": "HSK 1 · Lote 5: Preguntar",
+    "description": "Palabras interrogativas y partículas",
+    "preview": "什么 · 谁 · 哪 · 哪儿 · 怎么 · 怎么样 · 几 · 多少 · 吗 · 呢",
+    "items": [
+      {
+        "id": "hsk01-v05-01",
+        "hanzi": "什么",
+        "pinyin": "shénme",
+        "meaning": "qué",
+        "example_hanzi": "你想吃什么？",
+        "example_pinyin": "Nǐ xiǎng chī shénme?",
+        "example_es": "¿Qué querés comer?"
+      },
+      {
+        "id": "hsk01-v05-02",
+        "hanzi": "谁",
+        "pinyin": "shéi",
+        "meaning": "quién",
+        "example_hanzi": "他是谁？",
+        "example_pinyin": "Tā shì shéi?",
+        "example_es": "¿Quién es él?"
+      },
+      {
+        "id": "hsk01-v05-03",
+        "hanzi": "哪",
+        "pinyin": "nǎ",
+        "meaning": "cuál",
+        "example_hanzi": "你喜欢哪个？",
+        "example_pinyin": "Nǐ xǐhuan nǎge?",
+        "example_es": "¿Cuál te gusta?"
+      },
+      {
+        "id": "hsk01-v05-04",
+        "hanzi": "哪儿",
+        "pinyin": "nǎr",
+        "meaning": "dónde / adónde",
+        "example_hanzi": "你去哪儿？",
+        "example_pinyin": "Nǐ qù nǎr?",
+        "example_es": "¿Adónde vas?"
+      },
+      {
+        "id": "hsk01-v05-05",
+        "hanzi": "怎么",
+        "pinyin": "zěnme",
+        "meaning": "cómo",
+        "example_hanzi": "这个字怎么读？",
+        "example_pinyin": "Zhège zì zěnme dú?",
+        "example_es": "¿Cómo se lee este carácter?"
+      },
+      {
+        "id": "hsk01-v05-06",
+        "hanzi": "怎么样",
+        "pinyin": "zěnmeyàng",
+        "meaning": "cómo es / qué tal",
+        "example_hanzi": "今天天气怎么样？",
+        "example_pinyin": "Jīntiān tiānqì zěnmeyàng?",
+        "example_es": "¿Cómo está el tiempo hoy?"
+      },
+      {
+        "id": "hsk01-v05-07",
+        "hanzi": "几",
+        "pinyin": "jǐ",
+        "meaning": "cuántos (cantidad pequeña)",
+        "example_hanzi": "你有几个朋友？",
+        "example_pinyin": "Nǐ yǒu jǐ ge péngyou?",
+        "example_es": "¿Cuántos amigos tenés?"
+      },
+      {
+        "id": "hsk01-v05-08",
+        "hanzi": "多少",
+        "pinyin": "duōshao",
+        "meaning": "cuánto / cuántos",
+        "example_hanzi": "这个多少钱？",
+        "example_pinyin": "Zhège duōshao qián?",
+        "example_es": "¿Cuánto cuesta esto?"
+      },
+      {
+        "id": "hsk01-v05-09",
+        "hanzi": "吗",
+        "pinyin": "ma",
+        "meaning": "partícula de pregunta sí/no",
+        "example_hanzi": "你是学生吗？",
+        "example_pinyin": "Nǐ shì xuésheng ma?",
+        "example_es": "¿Sos estudiante?"
+      },
+      {
+        "id": "hsk01-v05-10",
+        "hanzi": "呢",
+        "pinyin": "ne",
+        "meaning": "partícula interrogativa / ¿y... ?",
+        "example_hanzi": "我很好，你呢？",
+        "example_pinyin": "Wǒ hěn hǎo, nǐ ne?",
+        "example_es": "Estoy muy bien, ¿y vos?"
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-06",
+    "title": "HSK 1 · Lote 6: Lugares y posición",
+    "description": "Lugares frecuentes y ubicación",
+    "preview": "家 · 学校 · 医院 · 饭店 · 商店 · 北京 · 中国 · 里 · 前面 · 后面",
+    "items": [
+      {
+        "id": "hsk01-v06-01",
+        "hanzi": "家",
+        "pinyin": "jiā",
+        "meaning": "casa / familia",
+        "example_hanzi": "我回家。",
+        "example_pinyin": "Wǒ huí jiā.",
+        "example_es": "Vuelvo a casa."
+      },
+      {
+        "id": "hsk01-v06-02",
+        "hanzi": "学校",
+        "pinyin": "xuéxiào",
+        "meaning": "escuela",
+        "example_hanzi": "我去学校。",
+        "example_pinyin": "Wǒ qù xuéxiào.",
+        "example_es": "Voy a la escuela."
+      },
+      {
+        "id": "hsk01-v06-03",
+        "hanzi": "医院",
+        "pinyin": "yīyuàn",
+        "meaning": "hospital",
+        "example_hanzi": "妈妈在医院工作。",
+        "example_pinyin": "Māma zài yīyuàn gōngzuò.",
+        "example_es": "Mamá trabaja en un hospital."
+      },
+      {
+        "id": "hsk01-v06-04",
+        "hanzi": "饭店",
+        "pinyin": "fàndiàn",
+        "meaning": "restaurante",
+        "example_hanzi": "我们去饭店吃米饭。",
+        "example_pinyin": "Wǒmen qù fàndiàn chī mǐfàn.",
+        "example_es": "Vamos al restaurante a comer arroz."
+      },
+      {
+        "id": "hsk01-v06-05",
+        "hanzi": "商店",
+        "pinyin": "shāngdiàn",
+        "meaning": "tienda",
+        "example_hanzi": "我去商店买东西。",
+        "example_pinyin": "Wǒ qù shāngdiàn mǎi dōngxi.",
+        "example_es": "Voy a la tienda a comprar cosas."
+      },
+      {
+        "id": "hsk01-v06-06",
+        "hanzi": "北京",
+        "pinyin": "Běijīng",
+        "meaning": "Beijing",
+        "example_hanzi": "我住在北京。",
+        "example_pinyin": "Wǒ zhù zài Běijīng.",
+        "example_es": "Vivo en Beijing."
+      },
+      {
+        "id": "hsk01-v06-07",
+        "hanzi": "中国",
+        "pinyin": "Zhōngguó",
+        "meaning": "China",
+        "example_hanzi": "我喜欢中国。",
+        "example_pinyin": "Wǒ xǐhuan Zhōngguó.",
+        "example_es": "Me gusta China."
+      },
+      {
+        "id": "hsk01-v06-08",
+        "hanzi": "里",
+        "pinyin": "lǐ",
+        "meaning": "dentro / en",
+        "example_hanzi": "杯子里有水。",
+        "example_pinyin": "Bēizi lǐ yǒu shuǐ.",
+        "example_es": "Hay agua dentro del vaso."
+      },
+      {
+        "id": "hsk01-v06-09",
+        "hanzi": "前面",
+        "pinyin": "qiánmian",
+        "meaning": "delante / enfrente",
+        "example_hanzi": "学校在前面。",
+        "example_pinyin": "Xuéxiào zài qiánmian.",
+        "example_es": "La escuela está adelante."
+      },
+      {
+        "id": "hsk01-v06-10",
+        "hanzi": "后面",
+        "pinyin": "hòumian",
+        "meaning": "detrás",
+        "example_hanzi": "饭店在学校后面。",
+        "example_pinyin": "Fàndiàn zài xuéxiào hòumian.",
+        "example_es": "El restaurante está detrás de la escuela."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-07",
+    "title": "HSK 1 · Lote 7: Movimiento y percepción",
+    "description": "Ir, venir, mirar, escuchar y hablar",
+    "preview": "来 · 去 · 回 · 住 · 坐 · 开 · 看 · 看见 · 听 · 说",
+    "items": [
+      {
+        "id": "hsk01-v07-01",
+        "hanzi": "来",
+        "pinyin": "lái",
+        "meaning": "venir",
+        "example_hanzi": "他今天来学校。",
+        "example_pinyin": "Tā jīntiān lái xuéxiào.",
+        "example_es": "Hoy él viene a la escuela."
+      },
+      {
+        "id": "hsk01-v07-02",
+        "hanzi": "去",
+        "pinyin": "qù",
+        "meaning": "ir",
+        "example_hanzi": "我去北京。",
+        "example_pinyin": "Wǒ qù Běijīng.",
+        "example_es": "Voy a Beijing."
+      },
+      {
+        "id": "hsk01-v07-03",
+        "hanzi": "回",
+        "pinyin": "huí",
+        "meaning": "volver / regresar",
+        "example_hanzi": "我下午五点回家。",
+        "example_pinyin": "Wǒ xiàwǔ wǔ diǎn huí jiā.",
+        "example_es": "Vuelvo a casa a las cinco de la tarde."
+      },
+      {
+        "id": "hsk01-v07-04",
+        "hanzi": "住",
+        "pinyin": "zhù",
+        "meaning": "vivir / alojarse",
+        "example_hanzi": "我住在北京。",
+        "example_pinyin": "Wǒ zhù zài Běijīng.",
+        "example_es": "Vivo en Beijing."
+      },
+      {
+        "id": "hsk01-v07-05",
+        "hanzi": "坐",
+        "pinyin": "zuò",
+        "meaning": "sentarse / ir en transporte",
+        "example_hanzi": "我坐出租车去学校。",
+        "example_pinyin": "Wǒ zuò chūzūchē qù xuéxiào.",
+        "example_es": "Voy a la escuela en taxi."
+      },
+      {
+        "id": "hsk01-v07-06",
+        "hanzi": "开",
+        "pinyin": "kāi",
+        "meaning": "abrir / conducir",
+        "example_hanzi": "请开门。",
+        "example_pinyin": "Qǐng kāi mén.",
+        "example_es": "Por favor, abrí la puerta."
+      },
+      {
+        "id": "hsk01-v07-07",
+        "hanzi": "看",
+        "pinyin": "kàn",
+        "meaning": "mirar / leer",
+        "example_hanzi": "我看电视。",
+        "example_pinyin": "Wǒ kàn diànshì.",
+        "example_es": "Miro televisión."
+      },
+      {
+        "id": "hsk01-v07-08",
+        "hanzi": "看见",
+        "pinyin": "kànjiàn",
+        "meaning": "ver / alcanzar a ver",
+        "example_hanzi": "我看见老师了。",
+        "example_pinyin": "Wǒ kànjiàn lǎoshī le.",
+        "example_es": "Vi al profesor."
+      },
+      {
+        "id": "hsk01-v07-09",
+        "hanzi": "听",
+        "pinyin": "tīng",
+        "meaning": "escuchar",
+        "example_hanzi": "我听老师说汉语。",
+        "example_pinyin": "Wǒ tīng lǎoshī shuō Hànyǔ.",
+        "example_es": "Escucho al profesor hablar chino."
+      },
+      {
+        "id": "hsk01-v07-10",
+        "hanzi": "说",
+        "pinyin": "shuō",
+        "meaning": "hablar / decir",
+        "example_hanzi": "我会说汉语。",
+        "example_pinyin": "Wǒ huì shuō Hànyǔ.",
+        "example_es": "Sé hablar chino."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-08",
+    "title": "HSK 1 · Lote 8: Estudio y comunicación",
+    "description": "Idioma, lectura, escritura y tecnología",
+    "preview": "汉语 · 学习 · 读 · 写 · 字 · 书 · 名字 · 电脑 · 电视 · 电影",
+    "items": [
+      {
+        "id": "hsk01-v08-01",
+        "hanzi": "汉语",
+        "pinyin": "Hànyǔ",
+        "meaning": "idioma chino",
+        "example_hanzi": "我学习汉语。",
+        "example_pinyin": "Wǒ xuéxí Hànyǔ.",
+        "example_es": "Estudio chino."
+      },
+      {
+        "id": "hsk01-v08-02",
+        "hanzi": "学习",
+        "pinyin": "xuéxí",
+        "meaning": "estudiar / aprender",
+        "example_hanzi": "我今天学习汉语。",
+        "example_pinyin": "Wǒ jīntiān xuéxí Hànyǔ.",
+        "example_es": "Hoy estudio chino."
+      },
+      {
+        "id": "hsk01-v08-03",
+        "hanzi": "读",
+        "pinyin": "dú",
+        "meaning": "leer",
+        "example_hanzi": "我读这本书。",
+        "example_pinyin": "Wǒ dú zhè běn shū.",
+        "example_es": "Leo este libro."
+      },
+      {
+        "id": "hsk01-v08-04",
+        "hanzi": "写",
+        "pinyin": "xiě",
+        "meaning": "escribir",
+        "example_hanzi": "我写汉字。",
+        "example_pinyin": "Wǒ xiě Hànzì.",
+        "example_es": "Escribo caracteres chinos."
+      },
+      {
+        "id": "hsk01-v08-05",
+        "hanzi": "字",
+        "pinyin": "zì",
+        "meaning": "carácter / letra",
+        "example_hanzi": "这个字怎么读？",
+        "example_pinyin": "Zhège zì zěnme dú?",
+        "example_es": "¿Cómo se lee este carácter?"
+      },
+      {
+        "id": "hsk01-v08-06",
+        "hanzi": "书",
+        "pinyin": "shū",
+        "meaning": "libro",
+        "example_hanzi": "这是我的书。",
+        "example_pinyin": "Zhè shì wǒ de shū.",
+        "example_es": "Este es mi libro."
+      },
+      {
+        "id": "hsk01-v08-07",
+        "hanzi": "名字",
+        "pinyin": "míngzi",
+        "meaning": "nombre",
+        "example_hanzi": "你叫什么名字？",
+        "example_pinyin": "Nǐ jiào shénme míngzi?",
+        "example_es": "¿Cómo te llamás?"
+      },
+      {
+        "id": "hsk01-v08-08",
+        "hanzi": "电脑",
+        "pinyin": "diànnǎo",
+        "meaning": "computadora",
+        "example_hanzi": "这是我的电脑。",
+        "example_pinyin": "Zhè shì wǒ de diànnǎo.",
+        "example_es": "Esta es mi computadora."
+      },
+      {
+        "id": "hsk01-v08-09",
+        "hanzi": "电视",
+        "pinyin": "diànshì",
+        "meaning": "televisión",
+        "example_hanzi": "爸爸在家看电视。",
+        "example_pinyin": "Bàba zài jiā kàn diànshì.",
+        "example_es": "Papá mira televisión en casa."
+      },
+      {
+        "id": "hsk01-v08-10",
+        "hanzi": "电影",
+        "pinyin": "diànyǐng",
+        "meaning": "película",
+        "example_hanzi": "我喜欢看电影。",
+        "example_pinyin": "Wǒ xǐhuan kàn diànyǐng.",
+        "example_es": "Me gusta mirar películas."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-09",
+    "title": "HSK 1 · Lote 9: Comida y bebida",
+    "description": "Alimentos y objetos frecuentes",
+    "preview": "吃 · 喝 · 水 · 茶 · 米饭 · 菜 · 水果 · 苹果 · 杯子 · 东西",
+    "items": [
+      {
+        "id": "hsk01-v09-01",
+        "hanzi": "吃",
+        "pinyin": "chī",
+        "meaning": "comer",
+        "example_hanzi": "我吃米饭。",
+        "example_pinyin": "Wǒ chī mǐfàn.",
+        "example_es": "Como arroz."
+      },
+      {
+        "id": "hsk01-v09-02",
+        "hanzi": "喝",
+        "pinyin": "hē",
+        "meaning": "beber",
+        "example_hanzi": "我喝水。",
+        "example_pinyin": "Wǒ hē shuǐ.",
+        "example_es": "Tomo agua."
+      },
+      {
+        "id": "hsk01-v09-03",
+        "hanzi": "水",
+        "pinyin": "shuǐ",
+        "meaning": "agua",
+        "example_hanzi": "杯子里有水。",
+        "example_pinyin": "Bēizi lǐ yǒu shuǐ.",
+        "example_es": "Hay agua en el vaso."
+      },
+      {
+        "id": "hsk01-v09-04",
+        "hanzi": "茶",
+        "pinyin": "chá",
+        "meaning": "té",
+        "example_hanzi": "我喜欢喝茶。",
+        "example_pinyin": "Wǒ xǐhuan hē chá.",
+        "example_es": "Me gusta tomar té."
+      },
+      {
+        "id": "hsk01-v09-05",
+        "hanzi": "米饭",
+        "pinyin": "mǐfàn",
+        "meaning": "arroz cocido / comida",
+        "example_hanzi": "我中午吃米饭。",
+        "example_pinyin": "Wǒ zhōngwǔ chī mǐfàn.",
+        "example_es": "Al mediodía como arroz."
+      },
+      {
+        "id": "hsk01-v09-06",
+        "hanzi": "菜",
+        "pinyin": "cài",
+        "meaning": "plato / verdura",
+        "example_hanzi": "这个菜很好吃。",
+        "example_pinyin": "Zhège cài hěn hǎochī.",
+        "example_es": "Este plato es muy rico."
+      },
+      {
+        "id": "hsk01-v09-07",
+        "hanzi": "水果",
+        "pinyin": "shuǐguǒ",
+        "meaning": "fruta",
+        "example_hanzi": "我喜欢吃水果。",
+        "example_pinyin": "Wǒ xǐhuan chī shuǐguǒ.",
+        "example_es": "Me gusta comer fruta."
+      },
+      {
+        "id": "hsk01-v09-08",
+        "hanzi": "苹果",
+        "pinyin": "píngguǒ",
+        "meaning": "manzana",
+        "example_hanzi": "我买三个苹果。",
+        "example_pinyin": "Wǒ mǎi sān ge píngguǒ.",
+        "example_es": "Compro tres manzanas."
+      },
+      {
+        "id": "hsk01-v09-09",
+        "hanzi": "杯子",
+        "pinyin": "bēizi",
+        "meaning": "vaso / taza",
+        "example_hanzi": "这是我的杯子。",
+        "example_pinyin": "Zhè shì wǒ de bēizi.",
+        "example_es": "Este es mi vaso."
+      },
+      {
+        "id": "hsk01-v09-10",
+        "hanzi": "东西",
+        "pinyin": "dōngxi",
+        "meaning": "cosa / cosas",
+        "example_hanzi": "我去商店买东西。",
+        "example_pinyin": "Wǒ qù shāngdiàn mǎi dōngxi.",
+        "example_es": "Voy a la tienda a comprar cosas."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-10",
+    "title": "HSK 1 · Lote 10: Compras y cantidades",
+    "description": "Comprar, medir y describir",
+    "preview": "买 · 钱 · 块 · 个 · 本 · 些 · 多 · 少 · 大 · 小",
+    "items": [
+      {
+        "id": "hsk01-v10-01",
+        "hanzi": "买",
+        "pinyin": "mǎi",
+        "meaning": "comprar",
+        "example_hanzi": "我想买这本书。",
+        "example_pinyin": "Wǒ xiǎng mǎi zhè běn shū.",
+        "example_es": "Quiero comprar este libro."
+      },
+      {
+        "id": "hsk01-v10-02",
+        "hanzi": "钱",
+        "pinyin": "qián",
+        "meaning": "dinero",
+        "example_hanzi": "这个多少钱？",
+        "example_pinyin": "Zhège duōshao qián?",
+        "example_es": "¿Cuánto cuesta esto?"
+      },
+      {
+        "id": "hsk01-v10-03",
+        "hanzi": "块",
+        "pinyin": "kuài",
+        "meaning": "yuan (coloquial) / pedazo",
+        "example_hanzi": "这个十块钱。",
+        "example_pinyin": "Zhège shí kuài qián.",
+        "example_es": "Esto cuesta diez yuanes."
+      },
+      {
+        "id": "hsk01-v10-04",
+        "hanzi": "个",
+        "pinyin": "gè",
+        "meaning": "clasificador general",
+        "example_hanzi": "我有三个朋友。",
+        "example_pinyin": "Wǒ yǒu sān ge péngyou.",
+        "example_es": "Tengo tres amigos."
+      },
+      {
+        "id": "hsk01-v10-05",
+        "hanzi": "本",
+        "pinyin": "běn",
+        "meaning": "clasificador para libros",
+        "example_hanzi": "我有三本书。",
+        "example_pinyin": "Wǒ yǒu sān běn shū.",
+        "example_es": "Tengo tres libros."
+      },
+      {
+        "id": "hsk01-v10-06",
+        "hanzi": "些",
+        "pinyin": "xiē",
+        "meaning": "algunos / unas cuantas",
+        "example_hanzi": "我买了一些水果。",
+        "example_pinyin": "Wǒ mǎi le yìxiē shuǐguǒ.",
+        "example_es": "Compré algo de fruta."
+      },
+      {
+        "id": "hsk01-v10-07",
+        "hanzi": "多",
+        "pinyin": "duō",
+        "meaning": "mucho / muchos",
+        "example_hanzi": "学校人很多。",
+        "example_pinyin": "Xuéxiào rén hěn duō.",
+        "example_es": "En la escuela hay mucha gente."
+      },
+      {
+        "id": "hsk01-v10-08",
+        "hanzi": "少",
+        "pinyin": "shǎo",
+        "meaning": "poco / pocos",
+        "example_hanzi": "学校人很少。",
+        "example_pinyin": "Xuéxiào rén hěn shǎo.",
+        "example_es": "En la escuela hay poca gente."
+      },
+      {
+        "id": "hsk01-v10-09",
+        "hanzi": "大",
+        "pinyin": "dà",
+        "meaning": "grande",
+        "example_hanzi": "这个苹果很大。",
+        "example_pinyin": "Zhège píngguǒ hěn dà.",
+        "example_es": "Esta manzana es grande."
+      },
+      {
+        "id": "hsk01-v10-10",
+        "hanzi": "小",
+        "pinyin": "xiǎo",
+        "meaning": "pequeño",
+        "example_hanzi": "猫很小。",
+        "example_pinyin": "Māo hěn xiǎo.",
+        "example_es": "El gato es pequeño."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-11",
+    "title": "HSK 1 · Lote 11: Acciones cotidianas",
+    "description": "Trabajo, gustos y capacidades",
+    "preview": "工作 · 打电话 · 睡觉 · 做 · 想 · 喜欢 · 爱 · 会 · 能 · 请",
+    "items": [
+      {
+        "id": "hsk01-v11-01",
+        "hanzi": "工作",
+        "pinyin": "gōngzuò",
+        "meaning": "trabajar / trabajo",
+        "example_hanzi": "我在医院工作。",
+        "example_pinyin": "Wǒ zài yīyuàn gōngzuò.",
+        "example_es": "Trabajo en un hospital."
+      },
+      {
+        "id": "hsk01-v11-02",
+        "hanzi": "打电话",
+        "pinyin": "dǎ diànhuà",
+        "meaning": "llamar por teléfono",
+        "example_hanzi": "我打电话。",
+        "example_pinyin": "Wǒ dǎ diànhuà.",
+        "example_es": "Hago una llamada telefónica."
+      },
+      {
+        "id": "hsk01-v11-03",
+        "hanzi": "睡觉",
+        "pinyin": "shuìjiào",
+        "meaning": "dormir",
+        "example_hanzi": "我十点睡觉。",
+        "example_pinyin": "Wǒ shí diǎn shuìjiào.",
+        "example_es": "Duermo a las diez."
+      },
+      {
+        "id": "hsk01-v11-04",
+        "hanzi": "做",
+        "pinyin": "zuò",
+        "meaning": "hacer",
+        "example_hanzi": "你在做什么？",
+        "example_pinyin": "Nǐ zài zuò shénme?",
+        "example_es": "¿Qué estás haciendo?"
+      },
+      {
+        "id": "hsk01-v11-05",
+        "hanzi": "想",
+        "pinyin": "xiǎng",
+        "meaning": "querer / pensar",
+        "example_hanzi": "我想喝茶。",
+        "example_pinyin": "Wǒ xiǎng hē chá.",
+        "example_es": "Quiero tomar té."
+      },
+      {
+        "id": "hsk01-v11-06",
+        "hanzi": "喜欢",
+        "pinyin": "xǐhuan",
+        "meaning": "gustar",
+        "example_hanzi": "我喜欢汉语。",
+        "example_pinyin": "Wǒ xǐhuan Hànyǔ.",
+        "example_es": "Me gusta el chino."
+      },
+      {
+        "id": "hsk01-v11-07",
+        "hanzi": "爱",
+        "pinyin": "ài",
+        "meaning": "amar / querer",
+        "example_hanzi": "我爱爸爸妈妈。",
+        "example_pinyin": "Wǒ ài bàba māma.",
+        "example_es": "Quiero a papá y mamá."
+      },
+      {
+        "id": "hsk01-v11-08",
+        "hanzi": "会",
+        "pinyin": "huì",
+        "meaning": "saber hacer / poder por aprendizaje",
+        "example_hanzi": "我会说汉语。",
+        "example_pinyin": "Wǒ huì shuō Hànyǔ.",
+        "example_es": "Sé hablar chino."
+      },
+      {
+        "id": "hsk01-v11-09",
+        "hanzi": "能",
+        "pinyin": "néng",
+        "meaning": "poder / ser capaz",
+        "example_hanzi": "我能坐这儿吗？",
+        "example_pinyin": "Wǒ néng zuò zhèr ma?",
+        "example_es": "¿Puedo sentarme acá?"
+      },
+      {
+        "id": "hsk01-v11-10",
+        "hanzi": "请",
+        "pinyin": "qǐng",
+        "meaning": "por favor / invitar",
+        "example_hanzi": "请坐。",
+        "example_pinyin": "Qǐng zuò.",
+        "example_es": "Por favor, sentate."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-12",
+    "title": "HSK 1 · Lote 12: Clima y descripción",
+    "description": "Clima, estados y negación",
+    "preview": "天气 · 下雨 · 冷 · 热 · 漂亮 · 高兴 · 太 · 不 · 没有 · 都",
+    "items": [
+      {
+        "id": "hsk01-v12-01",
+        "hanzi": "天气",
+        "pinyin": "tiānqì",
+        "meaning": "clima / tiempo",
+        "example_hanzi": "今天天气很好。",
+        "example_pinyin": "Jīntiān tiānqì hěn hǎo.",
+        "example_es": "Hoy hace muy buen tiempo."
+      },
+      {
+        "id": "hsk01-v12-02",
+        "hanzi": "下雨",
+        "pinyin": "xiàyǔ",
+        "meaning": "llover",
+        "example_hanzi": "今天下雨。",
+        "example_pinyin": "Jīntiān xiàyǔ.",
+        "example_es": "Hoy llueve."
+      },
+      {
+        "id": "hsk01-v12-03",
+        "hanzi": "冷",
+        "pinyin": "lěng",
+        "meaning": "frío",
+        "example_hanzi": "今天很冷。",
+        "example_pinyin": "Jīntiān hěn lěng.",
+        "example_es": "Hoy hace mucho frío."
+      },
+      {
+        "id": "hsk01-v12-04",
+        "hanzi": "热",
+        "pinyin": "rè",
+        "meaning": "calor / caliente",
+        "example_hanzi": "今天很热。",
+        "example_pinyin": "Jīntiān hěn rè.",
+        "example_es": "Hoy hace mucho calor."
+      },
+      {
+        "id": "hsk01-v12-05",
+        "hanzi": "漂亮",
+        "pinyin": "piàoliang",
+        "meaning": "lindo/a / bonito/a",
+        "example_hanzi": "衣服很漂亮。",
+        "example_pinyin": "Yīfu hěn piàoliang.",
+        "example_es": "La ropa es muy linda."
+      },
+      {
+        "id": "hsk01-v12-06",
+        "hanzi": "高兴",
+        "pinyin": "gāoxìng",
+        "meaning": "contento/a",
+        "example_hanzi": "认识你很高兴。",
+        "example_pinyin": "Rènshi nǐ hěn gāoxìng.",
+        "example_es": "Encantado/a de conocerte."
+      },
+      {
+        "id": "hsk01-v12-07",
+        "hanzi": "太",
+        "pinyin": "tài",
+        "meaning": "demasiado / muy",
+        "example_hanzi": "这个太大了。",
+        "example_pinyin": "Zhège tài dà le.",
+        "example_es": "Esto es demasiado grande."
+      },
+      {
+        "id": "hsk01-v12-08",
+        "hanzi": "不",
+        "pinyin": "bù",
+        "meaning": "no",
+        "example_hanzi": "我不喝茶。",
+        "example_pinyin": "Wǒ bù hē chá.",
+        "example_es": "No tomo té."
+      },
+      {
+        "id": "hsk01-v12-09",
+        "hanzi": "没有",
+        "pinyin": "méiyǒu",
+        "meaning": "no tener / no haber",
+        "example_hanzi": "我没有猫。",
+        "example_pinyin": "Wǒ méiyǒu māo.",
+        "example_es": "No tengo gato."
+      },
+      {
+        "id": "hsk01-v12-10",
+        "hanzi": "都",
+        "pinyin": "dōu",
+        "meaning": "todos / ambos",
+        "example_hanzi": "我们都是学生。",
+        "example_pinyin": "Wǒmen dōu shì xuésheng.",
+        "example_es": "Todos somos estudiantes."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-13",
+    "title": "HSK 1 · Lote 13: Cortesía y conversación",
+    "description": "Expresiones para interactuar",
+    "preview": "谢谢 · 不客气 · 对不起 · 没关系 · 再见 · 喂 · 认识 · 和 · 的 · 了",
+    "items": [
+      {
+        "id": "hsk01-v13-01",
+        "hanzi": "谢谢",
+        "pinyin": "xièxie",
+        "meaning": "gracias",
+        "example_hanzi": "谢谢你。",
+        "example_pinyin": "Xièxie nǐ.",
+        "example_es": "Gracias."
+      },
+      {
+        "id": "hsk01-v13-02",
+        "hanzi": "不客气",
+        "pinyin": "bú kèqi",
+        "meaning": "de nada",
+        "example_hanzi": "不客气。",
+        "example_pinyin": "Bú kèqi.",
+        "example_es": "De nada."
+      },
+      {
+        "id": "hsk01-v13-03",
+        "hanzi": "对不起",
+        "pinyin": "duìbuqǐ",
+        "meaning": "perdón / disculpá",
+        "example_hanzi": "对不起，老师。",
+        "example_pinyin": "Duìbuqǐ, lǎoshī.",
+        "example_es": "Perdón, profesor/a."
+      },
+      {
+        "id": "hsk01-v13-04",
+        "hanzi": "没关系",
+        "pinyin": "méi guānxi",
+        "meaning": "no pasa nada",
+        "example_hanzi": "没关系。",
+        "example_pinyin": "Méi guānxi.",
+        "example_es": "No pasa nada."
+      },
+      {
+        "id": "hsk01-v13-05",
+        "hanzi": "再见",
+        "pinyin": "zàijiàn",
+        "meaning": "adiós",
+        "example_hanzi": "老师，再见。",
+        "example_pinyin": "Lǎoshī, zàijiàn.",
+        "example_es": "Profesor/a, adiós."
+      },
+      {
+        "id": "hsk01-v13-06",
+        "hanzi": "喂",
+        "pinyin": "wèi",
+        "meaning": "hola (al teléfono)",
+        "example_hanzi": "喂，你好！",
+        "example_pinyin": "Wèi, nǐ hǎo!",
+        "example_es": "Hola (al teléfono)."
+      },
+      {
+        "id": "hsk01-v13-07",
+        "hanzi": "认识",
+        "pinyin": "rènshi",
+        "meaning": "conocer",
+        "example_hanzi": "认识你很高兴。",
+        "example_pinyin": "Rènshi nǐ hěn gāoxìng.",
+        "example_es": "Encantado/a de conocerte."
+      },
+      {
+        "id": "hsk01-v13-08",
+        "hanzi": "和",
+        "pinyin": "hé",
+        "meaning": "y / con",
+        "example_hanzi": "我和朋友去学校。",
+        "example_pinyin": "Wǒ hé péngyou qù xuéxiào.",
+        "example_es": "Voy a la escuela con un amigo."
+      },
+      {
+        "id": "hsk01-v13-09",
+        "hanzi": "的",
+        "pinyin": "de",
+        "meaning": "partícula posesiva / atributiva",
+        "example_hanzi": "这是我的书。",
+        "example_pinyin": "Zhè shì wǒ de shū.",
+        "example_es": "Este es mi libro."
+      },
+      {
+        "id": "hsk01-v13-10",
+        "hanzi": "了",
+        "pinyin": "le",
+        "meaning": "partícula de cambio o acción completada",
+        "example_hanzi": "我回家了。",
+        "example_pinyin": "Wǒ huí jiā le.",
+        "example_es": "Ya volví a casa."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-14",
+    "title": "HSK 1 · Lote 14: Hora y ubicación",
+    "description": "Hora, edad y palabras espaciales",
+    "preview": "点 · 分钟 · 号 · 岁 · 时候 · 零 · 在 · 上 · 下 · 这",
+    "items": [
+      {
+        "id": "hsk01-v14-01",
+        "hanzi": "点",
+        "pinyin": "diǎn",
+        "meaning": "hora / punto",
+        "example_hanzi": "现在八点。",
+        "example_pinyin": "Xiànzài bā diǎn.",
+        "example_es": "Ahora son las ocho."
+      },
+      {
+        "id": "hsk01-v14-02",
+        "hanzi": "分钟",
+        "pinyin": "fēnzhōng",
+        "meaning": "minuto",
+        "example_hanzi": "我学习十分钟。",
+        "example_pinyin": "Wǒ xuéxí shí fēnzhōng.",
+        "example_es": "Estudio diez minutos."
+      },
+      {
+        "id": "hsk01-v14-03",
+        "hanzi": "号",
+        "pinyin": "hào",
+        "meaning": "día del mes / número",
+        "example_hanzi": "今天是十号。",
+        "example_pinyin": "Jīntiān shì shí hào.",
+        "example_es": "Hoy es día 10."
+      },
+      {
+        "id": "hsk01-v14-04",
+        "hanzi": "岁",
+        "pinyin": "suì",
+        "meaning": "años de edad",
+        "example_hanzi": "我二十岁。",
+        "example_pinyin": "Wǒ èrshí suì.",
+        "example_es": "Tengo veinte años."
+      },
+      {
+        "id": "hsk01-v14-05",
+        "hanzi": "时候",
+        "pinyin": "shíhou",
+        "meaning": "momento / cuando",
+        "example_hanzi": "你什么时候回家？",
+        "example_pinyin": "Nǐ shénme shíhou huí jiā?",
+        "example_es": "¿Cuándo volvés a casa?"
+      },
+      {
+        "id": "hsk01-v14-06",
+        "hanzi": "零",
+        "pinyin": "líng",
+        "meaning": "cero",
+        "example_hanzi": "我的电话有三个零。",
+        "example_pinyin": "Wǒ de diànhuà yǒu sān ge líng.",
+        "example_es": "Mi teléfono tiene tres ceros."
+      },
+      {
+        "id": "hsk01-v14-07",
+        "hanzi": "在",
+        "pinyin": "zài",
+        "meaning": "estar en / en",
+        "example_hanzi": "我在学校。",
+        "example_pinyin": "Wǒ zài xuéxiào.",
+        "example_es": "Estoy en la escuela."
+      },
+      {
+        "id": "hsk01-v14-08",
+        "hanzi": "上",
+        "pinyin": "shàng",
+        "meaning": "arriba / sobre",
+        "example_hanzi": "书在桌子上。",
+        "example_pinyin": "Shū zài zhuōzi shàng.",
+        "example_es": "El libro está sobre la mesa."
+      },
+      {
+        "id": "hsk01-v14-09",
+        "hanzi": "下",
+        "pinyin": "xià",
+        "meaning": "abajo / debajo",
+        "example_hanzi": "猫在桌子下。",
+        "example_pinyin": "Māo zài zhuōzi xià.",
+        "example_es": "El gato está debajo de la mesa."
+      },
+      {
+        "id": "hsk01-v14-10",
+        "hanzi": "这",
+        "pinyin": "zhè",
+        "meaning": "este / esto",
+        "example_hanzi": "这是我的书。",
+        "example_pinyin": "Zhè shì wǒ de shū.",
+        "example_es": "Este es mi libro."
+      }
+    ]
+  },
+  {
+    "id": "hsk01-vocab-15",
+    "title": "HSK 1 · Lote 15: Objetos, animales y transporte",
+    "description": "Último lote de vocabulario HSK 1",
+    "preview": "那 · 人 · 医生 · 衣服 · 椅子 · 桌子 · 出租车 · 飞机 · 狗 · 猫",
+    "items": [
+      {
+        "id": "hsk01-v15-01",
+        "hanzi": "那",
+        "pinyin": "nà",
+        "meaning": "ese / eso",
+        "example_hanzi": "那是我的电脑。",
+        "example_pinyin": "Nà shì wǒ de diànnǎo.",
+        "example_es": "Esa es mi computadora."
+      },
+      {
+        "id": "hsk01-v15-02",
+        "hanzi": "人",
+        "pinyin": "rén",
+        "meaning": "persona / gente",
+        "example_hanzi": "他是中国人。",
+        "example_pinyin": "Tā shì Zhōngguó rén.",
+        "example_es": "Él es chino."
+      },
+      {
+        "id": "hsk01-v15-03",
+        "hanzi": "医生",
+        "pinyin": "yīshēng",
+        "meaning": "médico/a",
+        "example_hanzi": "她是医生。",
+        "example_pinyin": "Tā shì yīshēng.",
+        "example_es": "Ella es médica."
+      },
+      {
+        "id": "hsk01-v15-04",
+        "hanzi": "衣服",
+        "pinyin": "yīfu",
+        "meaning": "ropa",
+        "example_hanzi": "衣服很漂亮。",
+        "example_pinyin": "Yīfu hěn piàoliang.",
+        "example_es": "La ropa es muy linda."
+      },
+      {
+        "id": "hsk01-v15-05",
+        "hanzi": "椅子",
+        "pinyin": "yǐzi",
+        "meaning": "silla",
+        "example_hanzi": "椅子在桌子后面。",
+        "example_pinyin": "Yǐzi zài zhuōzi hòumian.",
+        "example_es": "La silla está detrás de la mesa."
+      },
+      {
+        "id": "hsk01-v15-06",
+        "hanzi": "桌子",
+        "pinyin": "zhuōzi",
+        "meaning": "mesa",
+        "example_hanzi": "书在桌子上。",
+        "example_pinyin": "Shū zài zhuōzi shàng.",
+        "example_es": "El libro está sobre la mesa."
+      },
+      {
+        "id": "hsk01-v15-07",
+        "hanzi": "出租车",
+        "pinyin": "chūzūchē",
+        "meaning": "taxi",
+        "example_hanzi": "我坐出租车去学校。",
+        "example_pinyin": "Wǒ zuò chūzūchē qù xuéxiào.",
+        "example_es": "Voy a la escuela en taxi."
+      },
+      {
+        "id": "hsk01-v15-08",
+        "hanzi": "飞机",
+        "pinyin": "fēijī",
+        "meaning": "avión",
+        "example_hanzi": "我坐飞机去北京。",
+        "example_pinyin": "Wǒ zuò fēijī qù Běijīng.",
+        "example_es": "Voy a Beijing en avión."
+      },
+      {
+        "id": "hsk01-v15-09",
+        "hanzi": "狗",
+        "pinyin": "gǒu",
+        "meaning": "perro",
+        "example_hanzi": "狗在家。",
+        "example_pinyin": "Gǒu zài jiā.",
+        "example_es": "El perro está en casa."
+      },
+      {
+        "id": "hsk01-v15-10",
+        "hanzi": "猫",
+        "pinyin": "māo",
+        "meaning": "gato",
+        "example_hanzi": "猫在椅子上。",
+        "example_pinyin": "Māo zài yǐzi shàng.",
+        "example_es": "El gato está sobre la silla."
+      }
+    ]
+  }
+],
   "lessons": [
     {
       "id": "hsk01-frases-iniciales",
@@ -863,7 +2341,7 @@
           "meaning": "Quiero comprar esta ropa.",
           "example_hanzi": "这衣服很漂亮。",
           "example_pinyin": "Zhè yīfu hěn piàoliang.",
-          "example_es": "Esta ropa es muy linda."
+          "example_es": "La ropa es muy linda."
         },
         {
           "id": "hsk01-l2-012",
@@ -951,10 +2429,10 @@
   ]
 };
 
-    const STORAGE_KEY = "hsk1_practice_state_v1";
+    const STORAGE_KEY = "hsk1_practice_state_v2";
 
     const state = {
-      practiceType: "cards",
+      practiceType: "vocab",
       selectedLessonIds: [],
       originalDeck: [],
       queue: [],
@@ -986,14 +2464,14 @@
     }
 
     function getLessonsForPracticeType(practiceType = state.practiceType) {
-      if (practiceType === "audio") {
-        return APP_DATA.lessons;
-      }
+      if (practiceType === "vocab") return APP_DATA.vocabularyLessons;
       return APP_DATA.lessons;
     }
 
     function getPracticeLabel() {
-      return state.practiceType === "audio" ? "audio" : "tarjetas";
+      if (state.practiceType === "vocab") return "vocabulario";
+      if (state.practiceType === "audio") return "audio";
+      return "frases";
     }
 
     function renderPracticeTypeCards() {
@@ -1012,11 +2490,15 @@
       grid.innerHTML = "";
 
       const lessons = getLessonsForPracticeType();
-      const noun = state.practiceType === "audio" ? "audios" : "tarjetas";
-      homeSubtitle.textContent = `Elegí si querés practicar con ${getPracticeLabel()} y después seleccioná uno o varios lotes.`;
-      helper.textContent = state.practiceType === "audio"
-        ? "En modo audios primero escuchás la frase sin verla; al mostrar la respuesta aparecen hanzi, pinyin y significado."
-        : "En modo tarjetas ves hanzi y pinyin desde el inicio y podés escuchar la frase todas las veces que quieras.";
+      const noun = state.practiceType === "vocab" ? "palabras" : (state.practiceType === "audio" ? "audios" : "frases");
+      homeSubtitle.textContent = state.practiceType === "vocab"
+        ? "Elegí uno o varios lotes de 10 palabras. Podés empezar por uno solo y sumar lotes a medida que los dominás."
+        : `Elegí si querés practicar con ${getPracticeLabel()} y después seleccioná una o ambas lecciones.`;
+      helper.textContent = state.practiceType === "vocab"
+        ? "Cada tarjeta muestra la palabra en hanzi + pinyin desde el inicio. Al revelar aparece el significado y una frase breve de ejemplo."
+        : (state.practiceType === "audio"
+          ? "En modo audios primero escuchás la frase sin verla; al mostrar la respuesta aparecen hanzi, pinyin y significado."
+          : "En modo frases ves hanzi y pinyin desde el inicio y podés escuchar la frase todas las veces que quieras.");
 
       lessons.forEach((lesson) => {
         const card = document.createElement("div");
@@ -1028,6 +2510,7 @@
               <div class="lesson-title">${lesson.title}</div>
               <div class="lesson-meta">${lesson.description}</div>
               <div class="lesson-meta">${lesson.items.length} ${noun}</div>
+              ${lesson.preview ? `<div class="lesson-meta" style="margin-top:8px; line-height:1.45;">${lesson.preview}</div>` : ""}
             </div>
           </label>
         `;
@@ -1202,11 +2685,13 @@ updateExampleTranslationVisibility();
       $("tap-hint").classList.toggle("hidden", state.revealed);
       $("tap-hint").textContent = state.practiceType === "audio"
         ? "Escuchá el audio, tratá de reconocer la frase y luego hacé clic en “Mostrar respuesta”."
-        : "Leé el hanzi y el pinyin, escuchá el audio si querés y luego hacé clic en “Mostrar respuesta”.";
+        : (state.practiceType === "vocab"
+          ? "Reconocé la palabra por el hanzi y el pinyin, escuchala si querés y luego mostrá el significado."
+          : "Leé el hanzi y el pinyin, escuchá el audio si querés y luego hacé clic en “Mostrar respuesta”.");
 
       const total = state.queue.length;
       const currentNumber = Math.min(state.currentIndex + 1, total);
-      $("progress-label").textContent = `${state.practiceType === "audio" ? "Audio" : "Tarjeta"} ${currentNumber} de ${total}`;
+      $("progress-label").textContent = `${state.practiceType === "audio" ? "Audio" : (state.practiceType === "vocab" ? "Palabra" : "Frase")} ${currentNumber} de ${total}`;
       $("progress-mode").textContent = `Modo: ${state.mode === "review" ? "repaso" : "estudio"} · ${getPracticeLabel()}`;
       $("review-badge").textContent = `A repasar: ${state.reviewQueue.length}`;
       $("progress-fill").style.width = `${total ? (state.currentIndex / total) * 100 : 0}%`;
