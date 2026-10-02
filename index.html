@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🇨🇳 中文 · Práctica de chino</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="shortcut icon" href="favicon.svg">
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #15803d;
+      --danger: #b91c1c;
+      --border: #dbe3ef;
+      --shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #eff6ff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .app-header {
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-top: 18px;
+    }
+
+    .hidden { display: none !important; }
+
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .lesson-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fbfdff;
+      transition: 0.2s ease;
+    }
+
+    .lesson-card:hover {
+      transform: translateY(-1px);
+      border-color: #bfd4ff;
+    }
+
+    .lesson-card label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .lesson-card input[type="checkbox"] {
+      margin-top: 4px;
+      transform: scale(1.1);
+    }
+
+    .lesson-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .lesson-meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .practice-type-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .practice-type-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: #fbfdff;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .practice-type-card:hover {
+      transform: translateY(-1px);
+      border-color: #bfd4ff;
+    }
+
+    .practice-type-card input {
+      margin-right: 10px;
+      transform: scale(1.05);
+    }
+
+    .practice-type-card.active {
+      border-color: #8db5ff;
+      background: #eef4ff;
+    }
+
+    .practice-type-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .audio-player-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .audio-play-btn {
+      width: 88px;
+      height: 88px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-hover) 100%);
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+    }
+
+    .audio-play-btn:hover {
+      background: linear-gradient(180deg, var(--primary-hover) 0%, #163d99 100%);
+    }
+
+    .audio-play-btn.playing {
+      background: linear-gradient(180deg, #16a34a 0%, #15803d 100%);
+    }
+
+    .audio-play-meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+
+    .audio-speed-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .audio-speed-label {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .audio-speed-select {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.98rem;
+      background: white;
+      color: var(--text);
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .progress-wrap {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: #e7eef9;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #60a5fa 0%, var(--primary) 100%);
+      transition: width 0.25s ease;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #eef4ff;
+      color: #204b96;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid #d7e5ff;
+    }
+
+    .card {
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      padding: 28px 20px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+    }
+
+    .hanzi {
+      font-size: clamp(2rem, 7vw, 4rem);
+      line-height: 1.1;
+      font-weight: 400;
+      margin-bottom: 14px;
+    }
+
+    .hanzi-front-pinyin {
+      display: block;
+      margin-top: 14px;
+      font-size: clamp(1.35rem, 4vw, 2rem);
+      line-height: 1.35;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+.hanzi-front-example-pinyin {
+  display: block;
+  margin-top: 12px;
+  font-size: clamp(1rem, 3vw, 1.35rem);
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+    .tap-hint {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .details {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px dashed var(--border);
+      display: grid;
+      gap: 16px;
+      text-align: left;
+      max-width: 620px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail-item {
+      background: #ffffff;
+      border: 1px solid #ebf0f7;
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .detail-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-size: 1.5rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .detail-value-hanzi {
+      font-size: 1.6rem;
+      line-height: 1.35;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .example-main {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .example-sub {
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .example-translation.hidden-text {
+      display: none;
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .toggle-translation-btn {
+      background: transparent;
+      border: 1px solid #d8e2f0;
+      border-radius: 10px;
+      padding: 6px 8px;
+      font-size: 0.95rem;
+      line-height: 1;
+      color: var(--muted);
+      min-width: 40px;
+    }
+
+    .toggle-translation-btn:hover {
+      background: #f8fbff;
+    }
+
+    
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary { background: #e9eef7; color: #334155; }
+    .btn-success { background: var(--success); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .summary-box {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fbfdff;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+
+    .summary-value {
+      font-size: 1.7rem;
+      font-weight: 800;
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 16px 12px 40px; }
+      .panel { padding: 16px; }
+      .card { min-height: 360px; padding: 22px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="app-header">
+      <h1>中文 · Práctica de chino</h1>
+      <p class="subtitle">Practicá frases de chino con <strong>hanzi + pinyin desde el inicio</strong>, audio en chino y repaso de las frases que cuestan más.</p>
+    </header>
+
+    <section id="screen-home" class="panel">
+      <h2>Práctica disponible</h2>
+      <p id="home-subtitle" class="subtitle">Elegí tarjetas o reconocimiento auditivo y después seleccioná una o ambas lecciones.</p>
+
+      <div class="practice-type-row" id="practice-type-row">
+        <label class="practice-type-card active" data-practice-type="cards">
+          <div>
+            <div class="practice-type-title"><input type="radio" name="practiceType" value="cards" checked>Tarjetas</div>
+            <div class="lesson-meta">Frases con hanzi y pinyin visibles desde el inicio, más audio y traducción.</div>
+          </div>
+        </label>
+        <label class="practice-type-card" data-practice-type="audio">
+          <div>
+            <div class="practice-type-title"><input type="radio" name="practiceType" value="audio">Audios</div>
+            <div class="lesson-meta">Escuchás una frase y tratás de reconocerla antes de ver la respuesta.</div>
+          </div>
+        </label>
+      </div>
+
+      <p id="lessons-helper" class="subtitle" style="margin-top: 18px;">Las dos lecciones pueden practicarse como tarjetas o solo por audio.</p>
+      <div id="lessons-grid" class="lessons-grid"></div>
+      <div class="controls" style="justify-content:flex-start; margin-top: 20px;">
+        <button id="btn-start" class="btn-primary">Comenzar</button>
+      </div>
+    </section>
+
+    <section id="screen-study" class="panel hidden">
+      <div class="topbar">
+        <div class="progress-wrap">
+          <div class="progress-text">
+            <span id="progress-label">Tarjeta 1 de 10</span>
+            <span id="progress-mode">Modo: estudio</span>
+          </div>
+          <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+        </div>
+        <div id="review-badge" class="badge">A repasar: 0</div>
+      </div>
+
+      <div class="audio-speed-row hidden">
+        <label for="audio-speed-select" class="audio-speed-label">Velocidad de audio</label>
+        <select id="audio-speed-select" class="audio-speed-select">
+          <option value="0.6">0.6x</option>
+          <option value="0.8">0.8x</option>
+          <option value="1" selected>1.0x</option>
+          <option value="1.2">1.2x</option>
+          <option value="1.4">1.4x</option>
+        </select>
+      </div>
+
+      <div id="flashcard" class="card">
+        <div id="card-visual-zone">
+          <div id="hanzi" class="hanzi">你</div>
+        </div>
+        <div id="audio-zone" class="audio-player-zone hidden">
+          <button id="btn-play-audio" class="audio-play-btn" type="button" aria-label="Escuchar frase" title="Escuchar frase">▶</button>
+          <div id="audio-play-meta" class="audio-play-meta">Reproducciones: 0</div>
+        </div>
+        <div id="tap-hint" class="tap-hint">Intentá recordarlo y luego hacé clic en “Mostrar respuesta”.</div>
+
+        <div id="details" class="details hidden">
+          <div class="detail-item" id="detail-answer-hanzi-wrap">
+            <div class="detail-label">Chino</div>
+            <div id="detail-answer-hanzi" class="detail-value"></div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Pinyin</div>
+            <div id="detail-pinyin" class="detail-value"></div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Significado</div>
+            <div id="detail-meaning" class="detail-value"></div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-header">
+              <div class="detail-label" style="margin-bottom: 0;">Oración de ejemplo</div>
+              <button id="btn-toggle-example-translation" class="toggle-translation-btn" type="button" aria-label="Mostrar u ocultar traducción de la oración" title="Mostrar u ocultar traducción de la oración">🙈</button>
+            </div>
+            <div class="detail-value">
+              <div id="detail-example-hanzi" class="detail-value-hanzi"></div>
+              <div id="detail-example-pinyin" class="example-sub example-translation hidden-text"></div>
+              <div id="detail-example-es" class="example-translation hidden-text"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="controls-hidden" class="controls">
+        <button id="btn-show" class="btn-primary">Mostrar respuesta</button>
+      </div>
+
+      <div id="controls-revealed" class="controls hidden">
+        <button id="btn-knew" class="btn-success">La sabía</button>
+        <button id="btn-didnt-know" class="btn-danger">No la sabía</button>
+      </div>
+
+      <div class="controls">
+        <button id="btn-reset-session" class="btn-secondary">Reiniciar ronda</button>
+        <button id="btn-back-home" class="btn-secondary">Volver al inicio</button>
+      </div>
+    </section>
+
+    <section id="screen-summary" class="panel hidden">
+      <h2 id="summary-title">Ronda terminada</h2>
+      <p id="summary-text" class="subtitle">Ya viste todas las tarjetas de esta ronda.</p>
+
+      <div class="summary-grid">
+        <div class="summary-box">
+          <div class="summary-label">Total</div>
+          <div id="sum-total" class="summary-value">0</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-label">Correctas</div>
+          <div id="sum-correct" class="summary-value">0</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-label">A repasar</div>
+          <div id="sum-review" class="summary-value">0</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="btn-review" class="btn-primary">Repasar pendientes</button>
+        <button id="btn-restart-lessons" class="btn-secondary">Reiniciar lección</button>
+        <button id="btn-summary-home" class="btn-secondary">Volver al inicio</button>
+      </div>
+
+      <p class="footer-note">Tip: usá una velocidad más lenta al principio y después volvé a 1.0x para acercarte al ritmo normal.</p>
+    </section>
+  </div>
+
+  <script>
+    const APP_DATA = {
+  "lessons": [
+    {
+      "id": "hsk01-frases-iniciales",
+      "title": "HSK 1 - Lección 1: Primeras frases",
+      "description": "20 frases muy iniciales: saludos, presentación, familia, gustos, números y expresiones básicas",
+      "items": [
+        {
+          "id": "hsk01-l1-001",
+          "hanzi": "你好。",
+          "pinyin": "Nǐ hǎo.",
+          "meaning": "Hola.",
+          "example_hanzi": "你好，我叫王明。",
+          "example_pinyin": "Nǐ hǎo, wǒ jiào Wáng Míng.",
+          "example_es": "Hola, me llamo Wang Ming."
+        },
+        {
+          "id": "hsk01-l1-002",
+          "hanzi": "我叫李明。",
+          "pinyin": "Wǒ jiào Lǐ Míng.",
+          "meaning": "Me llamo Li Ming.",
+          "example_hanzi": "你叫什么名字？",
+          "example_pinyin": "Nǐ jiào shénme míngzi?",
+          "example_es": "¿Cómo te llamás?"
+        },
+        {
+          "id": "hsk01-l1-003",
+          "hanzi": "我是中国人。",
+          "pinyin": "Wǒ shì Zhōngguó rén.",
+          "meaning": "Soy chino/a.",
+          "example_hanzi": "他是北京人。",
+          "example_pinyin": "Tā shì Běijīng rén.",
+          "example_es": "Él es de Beijing."
+        },
+        {
+          "id": "hsk01-l1-004",
+          "hanzi": "我是学生。",
+          "pinyin": "Wǒ shì xuésheng.",
+          "meaning": "Soy estudiante.",
+          "example_hanzi": "她也是学生。",
+          "example_pinyin": "Tā yě shì xuésheng.",
+          "example_es": "Ella también es estudiante."
+        },
+        {
+          "id": "hsk01-l1-005",
+          "hanzi": "他是老师。",
+          "pinyin": "Tā shì lǎoshī.",
+          "meaning": "Él es profesor.",
+          "example_hanzi": "王老师很好。",
+          "example_pinyin": "Wáng lǎoshī hěn hǎo.",
+          "example_es": "El profesor Wang es muy bueno."
+        },
+        {
+          "id": "hsk01-l1-006",
+          "hanzi": "这是我爸爸。",
+          "pinyin": "Zhè shì wǒ bàba.",
+          "meaning": "Este es mi papá.",
+          "example_hanzi": "那是我妈妈。",
+          "example_pinyin": "Nà shì wǒ māma.",
+          "example_es": "Esa es mi mamá."
+        },
+        {
+          "id": "hsk01-l1-007",
+          "hanzi": "我有一个女儿。",
+          "pinyin": "Wǒ yǒu yí ge nǚ’ér.",
+          "meaning": "Tengo una hija.",
+          "example_hanzi": "他有一个儿子。",
+          "example_pinyin": "Tā yǒu yí ge érzi.",
+          "example_es": "Él tiene un hijo."
+        },
+        {
+          "id": "hsk01-l1-008",
+          "hanzi": "我有三个朋友。",
+          "pinyin": "Wǒ yǒu sān ge péngyou.",
+          "meaning": "Tengo tres amigos.",
+          "example_hanzi": "他们是我的朋友。",
+          "example_pinyin": "Tāmen shì wǒ de péngyou.",
+          "example_es": "Ellos son mis amigos."
+        },
+        {
+          "id": "hsk01-l1-009",
+          "hanzi": "我喜欢汉语。",
+          "pinyin": "Wǒ xǐhuan Hànyǔ.",
+          "meaning": "Me gusta el chino.",
+          "example_hanzi": "我学习汉语。",
+          "example_pinyin": "Wǒ xuéxí Hànyǔ.",
+          "example_es": "Estudio chino."
+        },
+        {
+          "id": "hsk01-l1-010",
+          "hanzi": "我喜欢喝茶。",
+          "pinyin": "Wǒ xǐhuan hē chá.",
+          "meaning": "Me gusta tomar té.",
+          "example_hanzi": "妈妈喜欢喝水。",
+          "example_pinyin": "Māma xǐhuan hē shuǐ.",
+          "example_es": "A mamá le gusta tomar agua."
+        },
+        {
+          "id": "hsk01-l1-011",
+          "hanzi": "我喜欢吃米饭。",
+          "pinyin": "Wǒ xǐhuan chī mǐfàn.",
+          "meaning": "Me gusta comer arroz.",
+          "example_hanzi": "他喜欢吃苹果。",
+          "example_pinyin": "Tā xǐhuan chī píngguǒ.",
+          "example_es": "A él le gusta comer manzanas."
+        },
+        {
+          "id": "hsk01-l1-012",
+          "hanzi": "这个苹果很好。",
+          "pinyin": "Zhège píngguǒ hěn hǎo.",
+          "meaning": "Esta manzana está muy bien/es muy buena.",
+          "example_hanzi": "我买三个苹果。",
+          "example_pinyin": "Wǒ mǎi sān ge píngguǒ.",
+          "example_es": "Compro tres manzanas."
+        },
+        {
+          "id": "hsk01-l1-013",
+          "hanzi": "那是我的书。",
+          "pinyin": "Nà shì wǒ de shū.",
+          "meaning": "Ese es mi libro.",
+          "example_hanzi": "这本书是老师的。",
+          "example_pinyin": "Zhè běn shū shì lǎoshī de.",
+          "example_es": "Este libro es del profesor."
+        },
+        {
+          "id": "hsk01-l1-014",
+          "hanzi": "这是我的电脑。",
+          "pinyin": "Zhè shì wǒ de diànnǎo.",
+          "meaning": "Esta es mi computadora.",
+          "example_hanzi": "电脑在桌子上。",
+          "example_pinyin": "Diànnǎo zài zhuōzi shàng.",
+          "example_es": "La computadora está sobre la mesa."
+        },
+        {
+          "id": "hsk01-l1-015",
+          "hanzi": "今天是星期一。",
+          "pinyin": "Jīntiān shì xīngqīyī.",
+          "meaning": "Hoy es lunes.",
+          "example_hanzi": "明天是星期二。",
+          "example_pinyin": "Míngtiān shì xīngqī’èr.",
+          "example_es": "Mañana es martes."
+        },
+        {
+          "id": "hsk01-l1-016",
+          "hanzi": "现在八点。",
+          "pinyin": "Xiànzài bā diǎn.",
+          "meaning": "Ahora son las ocho.",
+          "example_hanzi": "现在九点十分。",
+          "example_pinyin": "Xiànzài jiǔ diǎn shí fēn.",
+          "example_es": "Ahora son las nueve y diez."
+        },
+        {
+          "id": "hsk01-l1-017",
+          "hanzi": "我二十岁。",
+          "pinyin": "Wǒ èrshí suì.",
+          "meaning": "Tengo veinte años.",
+          "example_hanzi": "我女儿十岁。",
+          "example_pinyin": "Wǒ nǚ’ér shí suì.",
+          "example_es": "Mi hija tiene diez años."
+        },
+        {
+          "id": "hsk01-l1-018",
+          "hanzi": "谢谢你。",
+          "pinyin": "Xièxie nǐ.",
+          "meaning": "Gracias.",
+          "example_hanzi": "不客气。",
+          "example_pinyin": "Bú kèqi.",
+          "example_es": "De nada."
+        },
+        {
+          "id": "hsk01-l1-019",
+          "hanzi": "对不起。",
+          "pinyin": "Duìbuqǐ.",
+          "meaning": "Perdón / disculpá.",
+          "example_hanzi": "没关系。",
+          "example_pinyin": "Méi guānxi.",
+          "example_es": "No pasa nada."
+        },
+        {
+          "id": "hsk01-l1-020",
+          "hanzi": "再见。",
+          "pinyin": "Zàijiàn.",
+          "meaning": "Adiós.",
+          "example_hanzi": "老师，再见。",
+          "example_pinyin": "Lǎoshī, zàijiàn.",
+          "example_es": "Profesor/a, adiós."
+        }
+      ]
+    },
+    {
+      "id": "hsk01-frases-avanzadas",
+      "title": "HSK 1 - Lección 2: Frases en contexto",
+      "description": "20 frases un poco más avanzadas: preguntas, ubicación, horarios, compras, clima y acciones cotidianas",
+      "items": [
+        {
+          "id": "hsk01-l2-001",
+          "hanzi": "你去哪儿？",
+          "pinyin": "Nǐ qù nǎr?",
+          "meaning": "¿Adónde vas?",
+          "example_hanzi": "我去学校。",
+          "example_pinyin": "Wǒ qù xuéxiào.",
+          "example_es": "Voy a la escuela."
+        },
+        {
+          "id": "hsk01-l2-002",
+          "hanzi": "你家在哪儿？",
+          "pinyin": "Nǐ jiā zài nǎr?",
+          "meaning": "¿Dónde está tu casa?",
+          "example_hanzi": "我家在北京。",
+          "example_pinyin": "Wǒ jiā zài Běijīng.",
+          "example_es": "Mi casa está en Beijing."
+        },
+        {
+          "id": "hsk01-l2-003",
+          "hanzi": "学校在饭馆后面。",
+          "pinyin": "Xuéxiào zài fànguǎn hòumian.",
+          "meaning": "La escuela está detrás del restaurante.",
+          "example_hanzi": "商店在学校前面。",
+          "example_pinyin": "Shāngdiàn zài xuéxiào qiánmian.",
+          "example_es": "La tienda está delante de la escuela."
+        },
+        {
+          "id": "hsk01-l2-004",
+          "hanzi": "桌子上有一本书。",
+          "pinyin": "Zhuōzi shàng yǒu yì běn shū.",
+          "meaning": "Sobre la mesa hay un libro.",
+          "example_hanzi": "椅子在桌子后面。",
+          "example_pinyin": "Yǐzi zài zhuōzi hòumian.",
+          "example_es": "La silla está detrás de la mesa."
+        },
+        {
+          "id": "hsk01-l2-005",
+          "hanzi": "你看见我的猫了吗？",
+          "pinyin": "Nǐ kànjiàn wǒ de māo le ma?",
+          "meaning": "¿Viste a mi gato?",
+          "example_hanzi": "猫在那儿。",
+          "example_pinyin": "Māo zài nàr.",
+          "example_es": "El gato está allí."
+        },
+        {
+          "id": "hsk01-l2-006",
+          "hanzi": "你会说汉语吗？",
+          "pinyin": "Nǐ huì shuō Hànyǔ ma?",
+          "meaning": "¿Sabés hablar chino?",
+          "example_hanzi": "我会说汉语。",
+          "example_pinyin": "Wǒ huì shuō Hànyǔ.",
+          "example_es": "Sé hablar chino."
+        },
+        {
+          "id": "hsk01-l2-007",
+          "hanzi": "我能坐这儿吗？",
+          "pinyin": "Wǒ néng zuò zhèr ma?",
+          "meaning": "¿Puedo sentarme acá?",
+          "example_hanzi": "请坐。",
+          "example_pinyin": "Qǐng zuò.",
+          "example_es": "Por favor, sentate."
+        },
+        {
+          "id": "hsk01-l2-008",
+          "hanzi": "你想吃什么？",
+          "pinyin": "Nǐ xiǎng chī shénme?",
+          "meaning": "¿Qué querés comer?",
+          "example_hanzi": "我想吃中国菜。",
+          "example_pinyin": "Wǒ xiǎng chī Zhōngguó cài.",
+          "example_es": "Quiero comer comida china."
+        },
+        {
+          "id": "hsk01-l2-009",
+          "hanzi": "你想喝什么？",
+          "pinyin": "Nǐ xiǎng hē shénme?",
+          "meaning": "¿Qué querés tomar?",
+          "example_hanzi": "我想喝水。",
+          "example_pinyin": "Wǒ xiǎng hē shuǐ.",
+          "example_es": "Quiero tomar agua."
+        },
+        {
+          "id": "hsk01-l2-010",
+          "hanzi": "这个多少钱？",
+          "pinyin": "Zhège duōshao qián?",
+          "meaning": "¿Cuánto cuesta esto?",
+          "example_hanzi": "这个十块钱。",
+          "example_pinyin": "Zhège shí kuài qián.",
+          "example_es": "Esto cuesta diez yuanes."
+        },
+        {
+          "id": "hsk01-l2-011",
+          "hanzi": "我想买这衣服。",
+          "pinyin": "Wǒ xiǎng mǎi zhè yīfu.",
+          "meaning": "Quiero comprar esta ropa.",
+          "example_hanzi": "这衣服很漂亮。",
+          "example_pinyin": "Zhè yīfu hěn piàoliang.",
+          "example_es": "Esta ropa es muy linda."
+        },
+        {
+          "id": "hsk01-l2-012",
+          "hanzi": "今天的天气怎么样？",
+          "pinyin": "Jīntiān de tiānqì zěnmeyàng?",
+          "meaning": "¿Cómo está el tiempo hoy?",
+          "example_hanzi": "今天天气很好。",
+          "example_pinyin": "Jīntiān tiānqì hěn hǎo.",
+          "example_es": "Hoy hace muy buen tiempo."
+        },
+        {
+          "id": "hsk01-l2-013",
+          "hanzi": "今天很冷。",
+          "pinyin": "Jīntiān hěn lěng.",
+          "meaning": "Hoy hace mucho frío.",
+          "example_hanzi": "昨天很热。",
+          "example_pinyin": "Zuótiān hěn rè.",
+          "example_es": "Ayer hizo mucho calor."
+        },
+        {
+          "id": "hsk01-l2-014",
+          "hanzi": "今天下雨，我不去学校。",
+          "pinyin": "Jīntiān xiàyǔ, wǒ bú qù xuéxiào.",
+          "meaning": "Hoy llueve; no voy a la escuela.",
+          "example_hanzi": "明天不下雨。",
+          "example_pinyin": "Míngtiān bù xiàyǔ.",
+          "example_es": "Mañana no llueve."
+        },
+        {
+          "id": "hsk01-l2-015",
+          "hanzi": "你什么时候回家？",
+          "pinyin": "Nǐ shénme shíhou huí jiā?",
+          "meaning": "¿Cuándo volvés a casa?",
+          "example_hanzi": "我下午五点回家。",
+          "example_pinyin": "Wǒ xiàwǔ wǔ diǎn huí jiā.",
+          "example_es": "Vuelvo a casa a las cinco de la tarde."
+        },
+        {
+          "id": "hsk01-l2-016",
+          "hanzi": "我上午学习汉语。",
+          "pinyin": "Wǒ shàngwǔ xuéxí Hànyǔ.",
+          "meaning": "Estudio chino por la mañana.",
+          "example_hanzi": "我下午看书。",
+          "example_pinyin": "Wǒ xiàwǔ kàn shū.",
+          "example_es": "Por la tarde leo."
+        },
+        {
+          "id": "hsk01-l2-017",
+          "hanzi": "妈妈在医院工作。",
+          "pinyin": "Māma zài yīyuàn gōngzuò.",
+          "meaning": "Mamá trabaja en un hospital.",
+          "example_hanzi": "她是医生。",
+          "example_pinyin": "Tā shì yīshēng.",
+          "example_es": "Ella es médica."
+        },
+        {
+          "id": "hsk01-l2-018",
+          "hanzi": "爸爸在家看电视。",
+          "pinyin": "Bàba zài jiā kàn diànshì.",
+          "meaning": "Papá mira televisión en casa.",
+          "example_hanzi": "我和爸爸看电影。",
+          "example_pinyin": "Wǒ hé bàba kàn diànyǐng.",
+          "example_es": "Miro una película con papá."
+        },
+        {
+          "id": "hsk01-l2-019",
+          "hanzi": "我现在打电话。",
+          "pinyin": "Wǒ xiànzài dǎ diànhuà.",
+          "meaning": "Ahora hago una llamada telefónica.",
+          "example_hanzi": "喂，你好！",
+          "example_pinyin": "Wèi, nǐ hǎo!",
+          "example_es": "Hola (al teléfono)."
+        },
+        {
+          "id": "hsk01-l2-020",
+          "hanzi": "我学习汉语三个月了。",
+          "pinyin": "Wǒ xuéxí Hànyǔ sān ge yuè le.",
+          "meaning": "Estudio chino desde hace tres meses.",
+          "example_hanzi": "我很喜欢学习汉语。",
+          "example_pinyin": "Wǒ hěn xǐhuan xuéxí Hànyǔ.",
+          "example_es": "Me gusta mucho estudiar chino."
+        }
+      ]
+    }
+  ]
+};
+
+    const STORAGE_KEY = "hsk1_practice_state_v1";
+
+    const state = {
+      practiceType: "cards",
+      selectedLessonIds: [],
+      originalDeck: [],
+      queue: [],
+      reviewQueue: [],
+      currentIndex: 0,
+      currentCard: null,
+      revealed: false,
+      mode: "study",
+      exampleTranslationVisible: false,
+      audioPlayCount: 0,
+      audioUtterance: null,
+      audioSpeed: 1,
+      stats: {
+        total: 0,
+        correct: 0,
+        incorrect: 0
+      }
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function getLessonsForPracticeType(practiceType = state.practiceType) {
+      if (practiceType === "audio") {
+        return APP_DATA.lessons;
+      }
+      return APP_DATA.lessons;
+    }
+
+    function getPracticeLabel() {
+      return state.practiceType === "audio" ? "audio" : "tarjetas";
+    }
+
+    function renderPracticeTypeCards() {
+      document.querySelectorAll(".practice-type-card").forEach((card) => {
+        const isActive = card.dataset.practiceType === state.practiceType;
+        card.classList.toggle("active", isActive);
+        const input = card.querySelector('input[type="radio"]');
+        if (input) input.checked = isActive;
+      });
+    }
+
+    function renderLessons() {
+      const grid = $("lessons-grid");
+      const helper = $("lessons-helper");
+      const homeSubtitle = $("home-subtitle");
+      grid.innerHTML = "";
+
+      const lessons = getLessonsForPracticeType();
+      const noun = state.practiceType === "audio" ? "audios" : "tarjetas";
+      homeSubtitle.textContent = `Elegí si querés practicar con ${getPracticeLabel()} y después seleccioná uno o varios lotes.`;
+      helper.textContent = state.practiceType === "audio"
+        ? "En modo audios primero escuchás la frase sin verla; al mostrar la respuesta aparecen hanzi, pinyin y significado."
+        : "En modo tarjetas ves hanzi y pinyin desde el inicio y podés escuchar la frase todas las veces que quieras.";
+
+      lessons.forEach((lesson) => {
+        const card = document.createElement("div");
+        card.className = "lesson-card";
+        card.innerHTML = `
+          <label>
+            <input type="checkbox" value="${lesson.id}" ${state.selectedLessonIds.includes(lesson.id) ? "checked" : ""} />
+            <div>
+              <div class="lesson-title">${lesson.title}</div>
+              <div class="lesson-meta">${lesson.description}</div>
+              <div class="lesson-meta">${lesson.items.length} ${noun}</div>
+            </div>
+          </label>
+        `;
+        grid.appendChild(card);
+      });
+
+      renderPracticeTypeCards();
+    }
+
+    function getSelectedLessonIds() {
+      return [...document.querySelectorAll('#lessons-grid input[type="checkbox"]:checked')].map((el) => el.value);
+    }
+
+    function getDeckFromLessons(lessonIds) {
+      return getLessonsForPracticeType()
+        .filter((lesson) => lessonIds.includes(lesson.id))
+        .flatMap((lesson) => lesson.items.map((item) => ({ ...item, lessonId: lesson.id, lessonTitle: lesson.title })));
+    }
+
+    function showScreen(screenId) {
+      ["screen-home", "screen-study", "screen-summary"].forEach((id) => {
+        $(id).classList.toggle("hidden", id !== screenId);
+      });
+    }
+
+    function saveState() {
+      const serializable = {
+        ...state,
+        queue: [...state.queue],
+        reviewQueue: [...state.reviewQueue],
+        originalDeck: [...state.originalDeck],
+        currentCard: state.currentCard ? { ...state.currentCard } : null
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(serializable));
+    }
+
+    function clearSavedState() {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    function restoreState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+
+      try {
+        const saved = JSON.parse(raw);
+        Object.assign(state, saved);
+
+        if (!state.queue || !Array.isArray(state.queue) || !state.currentCard) {
+          return false;
+        }
+
+        renderLessons();
+
+        if (state.queue.length > 0 && state.currentCard) {
+          showScreen("screen-study");
+          renderCurrentCard();
+          return true;
+        }
+
+        renderSummary();
+        showScreen("screen-summary");
+        return true;
+      } catch (error) {
+        console.error("No se pudo restaurar el estado", error);
+        return false;
+      }
+    }
+
+    function startSession(lessonIds) {
+      const deck = getDeckFromLessons(lessonIds);
+      if (!deck.length) {
+        alert("Seleccioná al menos una lección.");
+        return;
+      }
+
+      state.selectedLessonIds = [...lessonIds];
+      state.originalDeck = [...deck];
+      state.queue = shuffle(deck);
+      state.reviewQueue = [];
+      state.currentIndex = 0;
+      state.currentCard = state.queue[0] || null;
+      state.revealed = false;
+      state.mode = "study";
+      state.audioPlayCount = 0;
+      state.stats = {
+        total: state.queue.length,
+        correct: 0,
+        incorrect: 0
+      };
+
+      showScreen("screen-study");
+      renderCurrentCard();
+      saveState();
+    }
+
+    function stopAudioPlayback() {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      state.audioUtterance = null;
+      $("btn-play-audio")?.classList.remove("playing");
+    }
+
+    function playCurrentAudio() {
+      if (!state.currentCard) return;
+      stopAudioPlayback();
+      state.audioPlayCount += 1;
+      $("audio-play-meta").textContent = `Reproducciones: ${state.audioPlayCount}`;
+
+      const synth = window.speechSynthesis;
+      if (!synth) return;
+
+      const utterance = new SpeechSynthesisUtterance(state.currentCard.hanzi);
+      utterance.lang = "zh-CN";
+      utterance.rate = state.audioSpeed || 1;
+      const voices = synth.getVoices();
+      const zhVoice = voices.find((voice) => voice.lang && voice.lang.toLowerCase().startsWith("zh"));
+      if (zhVoice) utterance.voice = zhVoice;
+      utterance.onstart = () => $("btn-play-audio")?.classList.add("playing");
+      utterance.onend = () => $("btn-play-audio")?.classList.remove("playing");
+      state.audioUtterance = utterance;
+      synth.speak(utterance);
+      saveState();
+    }
+
+function updateExampleTranslationVisibility() {
+  const pinyinEl = $("detail-example-pinyin");
+  const esEl = $("detail-example-es");
+  const btn = $("btn-toggle-example-translation");
+  const hidden = !state.exampleTranslationVisible;
+
+  // En HSK 1, el pinyin del ejemplo queda visible; el ojo controla solo el español.
+  pinyinEl.classList.remove("hidden-text");
+  esEl.classList.toggle("hidden-text", hidden);
+  btn.textContent = hidden ? "👁" : "🙈";
+  btn.setAttribute("aria-pressed", String(!hidden));
+  btn.setAttribute("title", hidden ? "Mostrar traducción de la oración" : "Ocultar traducción de la oración");
+}
+
+    function renderCurrentCard() {
+      if (!state.currentCard) {
+        finishRound();
+        return;
+      }
+
+      const hanziFront = $("hanzi");
+      hanziFront.textContent = state.currentCard.hanzi;
+      // En HSK 1 el frente siempre muestra hanzi + pinyin.
+      const pinyinFront = document.createElement("span");
+      pinyinFront.className = "hanzi-front-pinyin";
+      pinyinFront.textContent = state.currentCard.pinyin;
+      hanziFront.appendChild(pinyinFront);
+
+      $("card-visual-zone").classList.toggle("hidden", state.practiceType === "audio");
+      $("detail-answer-hanzi").textContent = state.currentCard.hanzi;
+      $("detail-answer-hanzi-wrap").classList.toggle("hidden",state.practiceType !== "audio" || !state.revealed);
+      $("audio-zone").classList.remove("hidden");
+      $("audio-speed-select").closest(".audio-speed-row").classList.remove("hidden");
+      $("audio-speed-select").value = String(state.audioSpeed || 1);
+      $("audio-play-meta").textContent = `Reproducciones: ${state.audioPlayCount}`;
+      $("detail-pinyin").textContent = state.currentCard.pinyin;
+      $("detail-meaning").textContent = state.currentCard.meaning;
+      $("detail-example-hanzi").textContent = state.currentCard.example_hanzi;
+      $("detail-example-pinyin").textContent = state.currentCard.example_pinyin;
+      $("detail-example-es").textContent = state.currentCard.example_es;
+updateExampleTranslationVisibility();
+
+      $("details").classList.toggle("hidden", !state.revealed);
+      $("controls-hidden").classList.toggle("hidden", state.revealed);
+      $("controls-revealed").classList.toggle("hidden", !state.revealed);
+      $("tap-hint").classList.toggle("hidden", state.revealed);
+      $("tap-hint").textContent = state.practiceType === "audio"
+        ? "Escuchá el audio, tratá de reconocer la frase y luego hacé clic en “Mostrar respuesta”."
+        : "Leé el hanzi y el pinyin, escuchá el audio si querés y luego hacé clic en “Mostrar respuesta”.";
+
+      const total = state.queue.length;
+      const currentNumber = Math.min(state.currentIndex + 1, total);
+      $("progress-label").textContent = `${state.practiceType === "audio" ? "Audio" : "Tarjeta"} ${currentNumber} de ${total}`;
+      $("progress-mode").textContent = `Modo: ${state.mode === "review" ? "repaso" : "estudio"} · ${getPracticeLabel()}`;
+      $("review-badge").textContent = `A repasar: ${state.reviewQueue.length}`;
+      $("progress-fill").style.width = `${total ? (state.currentIndex / total) * 100 : 0}%`;
+
+      saveState();
+    }
+
+    function revealAnswer() {
+      state.revealed = true;
+      renderCurrentCard();
+    }
+
+    function answerCard(knewIt) {
+      if (!state.currentCard) return;
+
+      if (knewIt) {
+        state.stats.correct += 1;
+      } else {
+        state.stats.incorrect += 1;
+        state.reviewQueue.push(state.currentCard);
+      }
+
+      state.currentIndex += 1;
+      state.currentCard = state.queue[state.currentIndex] || null;
+      stopAudioPlayback();
+      state.revealed = false;
+      state.exampleTranslationVisible = false;
+      state.audioPlayCount = 0;
+
+      if (!state.currentCard) {
+        finishRound();
+        return;
+      }
+
+      renderCurrentCard();
+    }
+
+    function finishRound() {
+      stopAudioPlayback();
+      clearSavedState();
+      renderSummary();
+      showScreen("screen-summary");
+    }
+
+    function renderSummary() {
+      $("sum-total").textContent = state.stats.total;
+      $("sum-correct").textContent = state.stats.correct;
+      $("sum-review").textContent = state.reviewQueue.length;
+
+      if (state.mode === "review") {
+        $("summary-title").textContent = "Repaso terminado";
+        $("summary-text").textContent = state.reviewQueue.length
+          ? "Todavía te quedaron algunas pendientes en la cola de repaso."
+          : "Excelente: terminaste el repaso actual.";
+      } else {
+        $("summary-title").textContent = "Ronda terminada";
+        $("summary-text").textContent = state.reviewQueue.length
+          ? "Ya viste todas las tarjetas. Podés repasar ahora las que marcaste como pendientes."
+          : "Ya viste todas las tarjetas y no quedaron pendientes.";
+      }
+
+      $("btn-review").disabled = state.reviewQueue.length === 0;
+    }
+
+    function startReview() {
+      if (!state.reviewQueue.length) return;
+
+      state.queue = shuffle(state.reviewQueue);
+      state.reviewQueue = [];
+      state.currentIndex = 0;
+      state.currentCard = state.queue[0] || null;
+      stopAudioPlayback();
+      state.revealed = false;
+      state.mode = "review";
+      state.exampleTranslationVisible = false;
+      state.audioPlayCount = 0;
+      state.stats = {
+        total: state.queue.length,
+        correct: 0,
+        incorrect: 0
+      };
+
+      showScreen("screen-study");
+      renderCurrentCard();
+      saveState();
+    }
+
+    function restartLessons() {
+      if (!state.selectedLessonIds.length) {
+        goHome();
+        return;
+      }
+      startSession(state.selectedLessonIds);
+    }
+
+    function resetCurrentSession() {
+      if (!state.selectedLessonIds.length) {
+        goHome();
+        return;
+      }
+      startSession(state.selectedLessonIds);
+    }
+
+    function goHome() {
+      clearSavedState();
+      state.selectedLessonIds = [];
+      state.originalDeck = [];
+      state.queue = [];
+      state.reviewQueue = [];
+      state.currentIndex = 0;
+      state.currentCard = null;
+      state.revealed = false;
+      state.mode = "study";
+      state.exampleTranslationVisible = false;
+      state.audioPlayCount = 0;
+      stopAudioPlayback();
+      state.stats = { total: 0, correct: 0, incorrect: 0 };
+      renderLessons();
+      showScreen("screen-home");
+    }
+
+    function bindEvents() {
+      $("btn-start").addEventListener("click", () => {
+        const selected = getSelectedLessonIds();
+        startSession(selected);
+      });
+
+      document.querySelectorAll('input[name="practiceType"]').forEach((input) => {
+        input.addEventListener("change", (event) => {
+          state.practiceType = event.target.value;
+          state.selectedLessonIds = [];
+          renderLessons();
+        });
+      });
+
+      $("audio-speed-select").addEventListener("change", (event) => {
+        state.audioSpeed = Number(event.target.value) || 1;
+        saveState();
+      });
+
+      $("btn-play-audio").addEventListener("click", (event) => {
+        event.stopPropagation();
+        playCurrentAudio();
+      });
+
+      $("btn-show").addEventListener("click", revealAnswer);
+
+      $("btn-toggle-example-translation").addEventListener("click", (event) => {
+        event.stopPropagation();
+        state.exampleTranslationVisible = !state.exampleTranslationVisible;
+        updateExampleTranslationVisibility();
+        saveState();
+      });
+
+      $("flashcard").addEventListener("click", () => {
+        if (!state.revealed && state.currentCard) revealAnswer();
+      });
+      $("btn-knew").addEventListener("click", () => answerCard(true));
+      $("btn-didnt-know").addEventListener("click", () => answerCard(false));
+      $("btn-review").addEventListener("click", startReview);
+      $("btn-restart-lessons").addEventListener("click", restartLessons);
+      $("btn-reset-session").addEventListener("click", resetCurrentSession);
+      $("btn-back-home").addEventListener("click", goHome);
+      $("btn-summary-home").addEventListener("click", goHome);
+
+      document.addEventListener("keydown", (event) => {
+        const activeStudy = !$("screen-study").classList.contains("hidden");
+        if (!activeStudy || !state.currentCard) return;
+
+        if (event.code === "Space") {
+          event.preventDefault();
+          if (state.practiceType === "audio") {
+            playCurrentAudio();
+          } else if (!state.revealed) {
+            revealAnswer();
+          }
+        }
+
+        if (state.practiceType === "audio" && event.key.toLowerCase() === "a") {
+          playCurrentAudio();
+        }
+
+        if (state.revealed && event.key.toLowerCase() === "s") {
+          answerCard(true);
+        }
+
+        if (state.revealed && event.key.toLowerCase() === "n") {
+          answerCard(false);
+        }
+      });
+    }
+
+    renderLessons();
+    bindEvents();
+    restoreState();
+  </script>
+</body>
+</html>
