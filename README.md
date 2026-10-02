@@ -1,121 +1,76 @@
-# Práctica de chino — HSK 1
+# 🇨🇳 中文 · Práctica de chino
 
-Aplicación web sencilla para practicar frases de **chino mandarín nivel HSK 1** mediante tarjetas y ejercicios de reconocimiento auditivo.
+Aplicación web estática para practicar **chino mandarín nivel HSK 1** mediante vocabulario, frases y reconocimiento auditivo.
 
-El proyecto funciona directamente en el navegador y no necesita servidor, base de datos ni instalación de dependencias.
-
-## Características
-
-- 2 lecciones de HSK 1.
-- 20 frases por lección.
-- Hanzi y pinyin visibles desde el inicio en el modo tarjetas.
-- Traducción al español.
-- Frases de ejemplo con hanzi, pinyin y traducción.
-- Reproducción de audio en chino mandarín.
-- Control de velocidad de audio:
-  - 0.6x
-  - 0.8x
-  - 1.0x
-  - 1.2x
-  - 1.4x
-- Modo de práctica con tarjetas.
-- Modo de reconocimiento por audio.
-- Botones **La sabía** y **No la sabía**.
-- Cola automática de repaso para las frases que cuestan más.
-- Progreso de la ronda.
-- Guardado temporal del estado mediante `localStorage`.
-- Diseño adaptable a computadora y dispositivos móviles.
-
-## Lecciones
-
-### HSK 1 — Lección 1: Primeras frases
-
-20 frases iniciales para practicar:
-
-- saludos;
-- presentación personal;
-- familia;
-- profesiones;
-- gustos;
-- comida y bebida;
-- números;
-- días de la semana;
-- horas;
-- expresiones básicas como 谢谢, 对不起 y 再见.
-
-### HSK 1 — Lección 2: Frases en contexto
-
-20 frases un poco más avanzadas con:
-
-- preguntas;
-- lugares y ubicación;
-- horarios;
-- compras y precios;
-- clima;
-- acciones cotidianas;
-- estudio;
-- trabajo;
-- uso de 会, 能 y 想.
+Funciona directamente en el navegador: no necesita servidor, base de datos ni dependencias.
 
 ## Modos de práctica
 
-### Tarjetas
+### 🀄 Vocabulario HSK 1
 
-La frase aparece desde el comienzo con:
+Incluye la lista clásica de **150 palabras HSK 1**, organizada en **15 lotes temáticos de 10 palabras** para facilitar repasos cortos y frecuentes.
 
-- 汉字 (hanzi);
+Cada tarjeta muestra desde el inicio:
+
+- hanzi;
 - pinyin;
-- botón para escuchar la pronunciación.
+- botón de audio en mandarín.
 
-Al mostrar la respuesta se puede consultar también:
+Al revelar la respuesta aparecen:
 
 - significado en español;
-- frase de ejemplo;
+- frase breve de ejemplo;
 - pinyin del ejemplo;
-- traducción del ejemplo.
+- traducción al español.
 
-Después se puede marcar la frase como:
+Es posible seleccionar uno o varios lotes a la vez. De esta forma se puede comenzar con 10 palabras y ampliar progresivamente la ronda.
 
-- **La sabía**
-- **No la sabía**
+### 💬 Frases HSK 1
 
-Las frases marcadas como no conocidas se agregan a la ronda de repaso.
+Dos lecciones de 20 frases:
 
-### Audios
+- **Lección 1: Primeras frases** — saludos, presentación, familia, gustos, números y expresiones básicas.
+- **Lección 2: Frases en contexto** — preguntas, ubicación, horarios, compras, clima y acciones cotidianas.
 
-En este modo la frase permanece oculta inicialmente.
+Las frases muestran hanzi y pinyin desde el inicio y permiten escuchar la pronunciación.
+
+### 🎧 Reconocimiento por audio
+
+La frase se mantiene oculta inicialmente.
 
 1. Se escucha el audio.
 2. Se intenta reconocer la frase.
-3. Se selecciona **Mostrar respuesta**.
+3. Se pulsa **Mostrar respuesta**.
 4. Aparecen hanzi, pinyin y significado.
-5. Se indica si la frase era conocida o debe repasarse.
+5. Se marca como **La sabía** o **No la sabía**.
+
+## Repaso
+
+En cualquier modalidad, las tarjetas marcadas como **No la sabía** se agregan a una cola de repaso.
+
+Al finalizar la ronda es posible practicar únicamente esas tarjetas pendientes.
 
 ## Audio
 
-La aplicación utiliza la API `SpeechSynthesis` del navegador.
-
-La voz se configura como:
+La aplicación utiliza la Web Speech API del navegador mediante `SpeechSynthesis` y solicita una voz en chino mandarín:
 
 ```javascript
 utterance.lang = "zh-CN";
 ```
 
-Cuando el navegador dispone de una voz china instalada, la aplicación intenta seleccionarla automáticamente.
+Se puede elegir la velocidad de reproducción:
 
-> La calidad y disponibilidad de las voces puede variar según el navegador y el sistema operativo.
+- 0.6x
+- 0.8x
+- 1.0x
+- 1.2x
+- 1.4x
 
-## Uso
+La calidad de la voz depende del navegador y del sistema operativo.
 
-No requiere instalación.
+## Ejecución
 
-Descargá o cloná el repositorio:
-
-```bash
-git clone URL_DEL_REPOSITORIO
-```
-
-Después abrí:
+No requiere instalación. Basta con abrir:
 
 ```text
 index.html
@@ -123,34 +78,28 @@ index.html
 
 en un navegador moderno.
 
-También se puede ejecutar con un servidor web local, por ejemplo:
+También puede ejecutarse con un servidor web local:
 
 ```bash
 python -m http.server 8000
 ```
 
-y abrir:
+Luego abrir:
 
 ```text
 http://localhost:8000
 ```
 
-## Publicación con GitHub Pages
+## GitHub Pages
 
-El proyecto puede publicarse directamente con GitHub Pages.
+El proyecto puede publicarse directamente con GitHub Pages:
 
-1. Subir `index.html` al repositorio.
+1. Subir `index.html`, `README.md` y `favicon.svg` al repositorio.
 2. Ir a **Settings → Pages**.
 3. En **Build and deployment**, elegir **Deploy from a branch**.
 4. Seleccionar la rama `main`.
-5. Seleccionar la carpeta `/ (root)`.
+5. Seleccionar `/ (root)`.
 6. Guardar.
-
-GitHub generará una dirección similar a:
-
-```text
-https://usuario.github.io/nombre-del-repositorio/
-```
 
 ## Estructura
 
@@ -161,35 +110,7 @@ https://usuario.github.io/nombre-del-repositorio/
 └── README.md
 ```
 
-Toda la lógica principal de la aplicación, las frases y los estilos están actualmente contenidos en `index.html`.
-
-## Datos de las frases
-
-Las lecciones se encuentran definidas dentro de `APP_DATA`:
-
-```javascript
-const APP_DATA = {
-  lessons: [
-    // ...
-  ]
-};
-```
-
-Cada frase utiliza una estructura similar a:
-
-```javascript
-{
-  "id": "hsk01-l1-001",
-  "hanzi": "你好。",
-  "pinyin": "Nǐ hǎo.",
-  "meaning": "Hola.",
-  "example_hanzi": "你好，我叫王明。",
-  "example_pinyin": "Nǐ hǎo, wǒ jiào Wáng Míng.",
-  "example_es": "Hola, me llamo Wang Ming."
-}
-```
-
-Esto permite agregar nuevas lecciones o frases sin modificar la lógica principal de la aplicación.
+Toda la interfaz, los datos y la lógica principal están contenidos actualmente en `index.html`.
 
 ## Tecnologías
 
@@ -203,17 +124,6 @@ No utiliza frameworks ni librerías externas.
 
 ## Objetivo
 
-El objetivo del proyecto es ofrecer una herramienta simple para practicar chino mandarín, especialmente:
+La aplicación busca facilitar una progresión simple:
 
-- reconocimiento de caracteres;
-- asociación entre hanzi y pinyin;
-- comprensión de frases;
-- pronunciación;
-- reconocimiento auditivo;
-- repaso de vocabulario HSK 1.
-
-## Licencia
-
-Proyecto de práctica y estudio personal.
-
-Podés modificar esta sección si decidís publicar el proyecto con una licencia específica, por ejemplo MIT.
+**reconocer palabras → asociar hanzi y pinyin → comprender el significado → verlas dentro de frases → reconocerlas por audio.**
