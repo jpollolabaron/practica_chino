@@ -430,7 +430,13 @@
       .panel { padding: 16px; }
       .card { min-height: 360px; padding: 22px 14px; }
     }
+
+.write-header{text-align:center;padding:12px}.write-pinyin{font-size:2rem;font-weight:800;color:var(--primary)}.write-meaning{font-size:1.25rem;margin-top:5px}
+#write-canvas{width:min(310px,100%);height:310px;margin:16px auto;border:2px solid var(--border);border-radius:12px;touch-action:none;background:linear-gradient(90deg,transparent 49.8%,#e5e7eb 50%,transparent 50.2%),linear-gradient(transparent 49.8%,#e5e7eb 50%,transparent 50.2%);display:flex;justify-content:center;align-items:center}
+#write-canvas svg{touch-action:none}.write-answer{text-align:center;font-size:3rem}.write-answer small{display:block;font-size:1rem;color:var(--muted)}
+
   </style>
+<script defer src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7/dist/hanzi-writer.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -462,6 +468,7 @@
             <div class="lesson-meta">Escuchás una frase y tratás de reconocerla antes de ver la respuesta.</div>
           </div>
         </label>
+        <label class="practice-type-card" data-practice-type="writing"><div><div class="practice-type-title"><input type="radio" name="practiceType" value="writing">✍️ Escritura de caracteres</div><div class="lesson-meta">Lecciones progresivas: escribí viendo solo pinyin y significado.</div></div></label>
       </div>
 
       <p id="lessons-helper" class="subtitle" style="margin-top: 18px;">Elegí vocabulario, frases o reconocimiento auditivo. En vocabulario podés seleccionar uno o varios lotes de 10 palabras.</p>
@@ -547,6 +554,19 @@
         <button id="btn-back-home" class="btn-secondary">Volver al inicio</button>
       </div>
     </section>
+
+
+<section id="screen-writing" class="panel hidden">
+ <div class="topbar"><div class="progress-wrap"><div class="progress-text"><span id="write-count"></span><span id="write-stats"></span></div><div class="progress-bar"><div class="progress-fill" id="write-progress"></div></div></div></div>
+ <div class="write-header"><div class="write-pinyin" id="write-pinyin"></div><div class="write-meaning" id="write-meaning"></div></div>
+ <p id="write-status" class="subtitle" role="status" aria-live="polite">Dibujá los trazos en orden.</p>
+ <div id="write-canvas" aria-label="Área para escribir el carácter chino"></div>
+ <div id="write-answer" class="write-answer hidden"></div>
+ <div class="controls"><button class="btn-primary" id="write-start">✍️ Escribir</button><button class="btn-secondary" id="write-hint">💡 Pista</button><button class="btn-secondary" id="write-animate">▶ Ver animación</button><button class="btn-secondary" id="write-retry">↻ Reintentar</button></div>
+ <div class="controls"><button class="btn-secondary" id="write-reveal">👁 Mostrar carácter</button><button class="btn-success" id="write-next">Siguiente →</button><button class="btn-secondary" id="write-home">Volver al inicio</button></div>
+ <div class="summary-grid" id="write-dashboard"></div>
+ <p class="footer-note">La corrección evalúa orden, dirección y aproximación de los trazos. La animación revela la solución. Se guarda el progreso localmente en este navegador.</p>
+</section>
 
     <section id="screen-summary" class="panel hidden">
       <h2 id="summary-title">Ronda terminada</h2>
@@ -2464,11 +2484,13 @@
     }
 
     function getLessonsForPracticeType(practiceType = state.practiceType) {
+      if (practiceType === "writing") return WRITING_LESSONS;
       if (practiceType === "vocab") return APP_DATA.vocabularyLessons;
       return APP_DATA.lessons;
     }
 
     function getPracticeLabel() {
+      if (state.practiceType === "writing") return "escritura";
       if (state.practiceType === "vocab") return "vocabulario";
       if (state.practiceType === "audio") return "audio";
       return "frases";
@@ -2490,11 +2512,11 @@
       grid.innerHTML = "";
 
       const lessons = getLessonsForPracticeType();
-      const noun = state.practiceType === "vocab" ? "palabras" : (state.practiceType === "audio" ? "audios" : "frases");
-      homeSubtitle.textContent = state.practiceType === "vocab"
+      const noun = state.practiceType === "writing" ? "caracteres" : state.practiceType === "vocab" ? "palabras" : (state.practiceType === "audio" ? "audios" : "frases");
+      homeSubtitle.textContent = state.practiceType === "writing" ? "Elegí una o varias lecciones de 10 caracteres, ordenadas desde los trazos más simples." : state.practiceType === "vocab"
         ? "Elegí uno o varios lotes de 10 palabras. Podés empezar por uno solo y sumar lotes a medida que los dominás."
         : `Elegí si querés practicar con ${getPracticeLabel()} y después seleccioná una o ambas lecciones.`;
-      helper.textContent = state.practiceType === "vocab"
+      helper.textContent = state.practiceType === "writing" ? "Solo verás el pinyin y el significado. Escribí el carácter y consultá la animación después si lo necesitás." : state.practiceType === "vocab"
         ? "Cada tarjeta muestra la palabra en hanzi + pinyin desde el inicio. Al revelar aparece el significado y una frase breve de ejemplo."
         : (state.practiceType === "audio"
           ? "En modo audios primero escuchás la frase sin verla; al mostrar la respuesta aparecen hanzi, pinyin y significado."
@@ -2531,7 +2553,7 @@
     }
 
     function showScreen(screenId) {
-      ["screen-home", "screen-study", "screen-summary"].forEach((id) => {
+      ["screen-home", "screen-study", "screen-summary", "screen-writing"].forEach((id) => {
         $(id).classList.toggle("hidden", id !== screenId);
       });
     }
@@ -2557,6 +2579,7 @@
 
       try {
         const saved = JSON.parse(raw);
+        if (saved.practiceType === "writing") return false;
         Object.assign(state, saved);
 
         if (!state.queue || !Array.isArray(state.queue) || !state.currentCard) {
@@ -2587,6 +2610,7 @@
         return;
       }
 
+      if (state.practiceType === "writing") { startWriting(deck,lessonIds); return; }
       state.selectedLessonIds = [...lessonIds];
       state.originalDeck = [...deck];
       state.queue = shuffle(deck);
@@ -2884,8 +2908,98 @@ updateExampleTranslationVisibility();
       });
     }
 
+
+    // Modo escritura: caracteres individuales extraídos del vocabulario existente.
+    const EASY_CHARS = [...'一二三十人大小口日月山水火木土中上下个女好子天我你他她是不有来去在了也吗呢几多少五六七八九书本字学中文生年今明昨时分点开关门车马牛羊米茶吃喝看听说写读买卖钱家爸妈友爱手目耳心气雨电话电脑工老师朋'];
+    const wordByChar = new Map();
+    APP_DATA.vocabularyLessons.forEach(l => l.items.forEach(w => [...w.hanzi].forEach(c => {
+      if (/\p{Script=Han}/u.test(c) && !wordByChar.has(c)) wordByChar.set(c, w);
+    })));
+    const uniqueChars = [...new Set([...EASY_CHARS.filter(c=>wordByChar.has(c)), ...wordByChar.keys()])];
+    const WRITING_LESSONS = [];
+    for (let i=0;i<uniqueChars.length;i+=10) {
+      const chars=uniqueChars.slice(i,i+10);
+      WRITING_LESSONS.push({id:`write-${i/10+1}`,title:`Escritura · Lección ${i/10+1}`,description:`${chars.length} caracteres`,preview:chars.join(' · '),items:chars.map(c=>{
+        const w=wordByChar.get(c);
+        // Solo reutilizar la lectura y el significado cuando la palabra es un único carácter.
+        const exact=w.hanzi===c;
+        return {id:`write-${c}`,hanzi:c,pinyin:exact?w.pinyin:'',meaning:exact?w.meaning:'',example_hanzi:w.example_hanzi};
+      })});
+    }
+    // Lecturas de los caracteres frecuentes incluidos en palabras compuestas.
+    const READINGS = {'人':['rén','persona'],'大':['dà','grande'],'小':['xiǎo','pequeño'],'口':['kǒu','boca'],'日':['rì','día / sol'],'山':['shān','montaña'],'火':['huǒ','fuego'],'木':['mù','madera'],'土':['tǔ','tierra'],'中':['zhōng','centro'],'上':['shàng','arriba'],'下':['xià','abajo'],'个':['gè','clasificador'],'子':['zǐ','hijo / sufijo'],'天':['tiān','día / cielo'],'不':['bù','no'],'了':['le','partícula aspectual'],'本':['běn','clasificador de libros'],'学':['xué','estudiar'],'文':['wén','lengua / escritura'],'生':['shēng','nacer'],'时':['shí','tiempo'],'分':['fēn','minuto'],'关':['guān','cerrar'],'门':['mén','puerta'],'车':['chē','vehículo'],'马':['mǎ','caballo'],'牛':['niú','vaca'],'羊':['yáng','oveja'],'买':['mǎi','comprar'],'卖':['mài','vender'],'钱':['qián','dinero'],'爸':['bà','papá'],'妈':['mā','mamá'],'友':['yǒu','amigo'],'爱':['ài','amar'],'手':['shǒu','mano'],'目':['mù','ojo'],'耳':['ěr','oreja'],'心':['xīn','corazón'],'气':['qì','aire'],'雨':['yǔ','lluvia'],'电':['diàn','electricidad'],'话':['huà','palabra'],'脑':['nǎo','cerebro'],'工':['gōng','trabajo'],'老':['lǎo','viejo'],'师':['shī','maestro'],'朋':['péng','amigo']};
+    WRITING_LESSONS.forEach(l=>l.items.forEach(it=>{if(READINGS[it.hanzi]) [it.pinyin,it.meaning]=READINGS[it.hanzi];}));
+    // Omitir lecturas no verificadas en caracteres provenientes de palabras compuestas.
+    WRITING_LESSONS.forEach(l=>l.items=l.items.filter(it=>it.pinyin && it.meaning));
+    const WRITING_VALID = WRITING_LESSONS.filter(l=>l.items.length);
+    WRITING_LESSONS.splice(0,WRITING_LESSONS.length,...WRITING_VALID);
+    const WRITE_STORAGE='hsk1_writing_progress_v1';
+    let writingDeck=[],writingIndex=0,writer=null,writeMistakes=0,writeHints=0,writeAnimated=false,writeCompleted=false,writeToken=0;
+    let writingProgress={};
+    try { writingProgress=JSON.parse(localStorage.getItem(WRITE_STORAGE)||'{}')||{}; }catch(e){writingProgress={};}
+    function persistWriting(){try{localStorage.setItem(WRITE_STORAGE,JSON.stringify(writingProgress));}catch(e){console.warn(e);}}
+    function startWriting(deck,lessonIds){
+      state.selectedLessonIds=[...lessonIds]; writingDeck=[...deck]; writingIndex=0;
+      showScreen('screen-writing'); renderWriting();
+    }
+    function renderWriting(){
+      const card=writingDeck[writingIndex]; if(!card){finishWriting();return;}
+      const token=++writeToken;
+      writer=null; writeMistakes=0;writeHints=0;writeAnimated=false;writeCompleted=false;
+      $('write-canvas').innerHTML='';$('write-answer').classList.add('hidden');
+      $('write-pinyin').textContent=card.pinyin;$('write-meaning').textContent=card.meaning;
+      $('write-count').textContent=`Carácter ${writingIndex+1} de ${writingDeck.length}`;
+      $('write-progress').style.width=`${100*writingIndex/writingDeck.length}%`;
+      $('write-status').textContent='Escribí el carácter sin ver la solución. Se valida cada trazo.';
+      $('write-next').disabled=false;
+      $('write-stats').textContent=`Intentos: ${writingProgress[card.hanzi]?.attempts||0}`;
+      $('write-dashboard').innerHTML=`<div class="summary-box"><div class="summary-label">Practicados</div><div class="summary-value">${Object.keys(writingProgress).length}</div></div><div class="summary-box"><div class="summary-label">Perfectos</div><div class="summary-value">${Object.values(writingProgress).filter(v=>v.perfect>0).length}</div></div>`;
+      if(typeof HanziWriter==='undefined'){$('write-status').textContent='No se pudo cargar Hanzi Writer. Revisá tu conexión a Internet.';return;}
+      writer=HanziWriter.create('write-canvas',card.hanzi,{width:300,height:300,padding:16,showOutline:false,showCharacter:false,strokeColor:'#2563eb',outlineColor:'#cbd5e1',highlightColor:'#16a34a',showHintAfterMisses:3, charDataLoader:(char,onLoad,onError)=>{
+        fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@latest/${encodeURIComponent(char)}.json`).then(r=>{if(!r.ok)throw Error('Sin datos');return r.json()}).then(data=>{if(token===writeToken)onLoad(data)}).catch(onError);
+      },onLoadCharDataError:()=>{$('write-status').textContent='No se pudieron cargar los trazos de este carácter.';}});
+      beginWriting();
+    }
+    function recordWriting(completed){
+      const c=writingDeck[writingIndex];if(!c)return;
+      const p=writingProgress[c.hanzi]||{attempts:0,perfect:0,mistakes:0,hints:0};
+      p.attempts++;p.mistakes+=writeMistakes;p.hints+=writeHints;
+      if(completed && !writeMistakes && !writeHints && !writeAnimated)p.perfect++;
+      p.last=new Date().toISOString();writingProgress[c.hanzi]=p;persistWriting();
+    }
+    function beginWriting(){
+      if(!writer)return; writeMistakes=0;writeHints=0;writeAnimated=false;writeCompleted=false;
+      $('write-answer').classList.add('hidden');
+      writer.cancelQuiz();writer.hideCharacter();writer.hideOutline();
+      writer.quiz({showHintAfterMisses:3,onMistake:()=>{writeMistakes++;$('write-status').textContent=`Errores en este intento: ${writeMistakes}. Seguí probando.`;},onComplete:(summary)=>{
+        if(writeCompleted)return;writeCompleted=true;recordWriting(true);
+        $('write-status').textContent=`¡Correcto! ${writeMistakes} errores${writeAnimated?' · con animación':''}.`;
+        $('write-answer').textContent=writingDeck[writingIndex].hanzi;
+        $('write-answer').classList.remove('hidden');
+      }});
+    }
+    function finishWriting(){
+      ++writeToken;writer=null;showScreen('screen-summary');
+      $('summary-title').textContent='Práctica de escritura terminada';
+      $('summary-text').textContent=`Completaste ${writingDeck.length} caracteres. Tus resultados quedaron guardados en este navegador.`;
+      $('sum-total').textContent=writingDeck.length;
+      $('sum-correct').textContent=writingDeck.filter(c=>writingProgress[c.hanzi]?.perfect).length;
+      $('sum-review').textContent=writingDeck.filter(c=>!writingProgress[c.hanzi]?.perfect).length;
+      $('btn-review').disabled=true;
+    }
+    function bindWriting(){
+      $('write-start').onclick=()=>beginWriting();
+      $('write-retry').onclick=()=>{if(writer){if(!writeCompleted)recordWriting(false);beginWriting();}};
+      $('write-hint').onclick=()=>{if(writer){writeHints++;writer.showOutline();$('write-status').textContent='Pista: se muestra el contorno del carácter.';}};
+      $('write-animate').onclick=()=>{if(writer){writeAnimated=true;writer.cancelQuiz();writer.showCharacter();writer.animateCharacter({onComplete:()=>{$('write-status').textContent='Animación terminada. Presioná «Escribir» para practicar de nuevo.';}});}};
+      $('write-reveal').onclick=()=>{if(writer){writeAnimated=true;writer.cancelQuiz();writer.showCharacter();$('write-answer').textContent=writingDeck[writingIndex].hanzi;$('write-answer').classList.remove('hidden');$('write-status').textContent='Solución revelada. Podés reintentar o pasar al siguiente.';}};
+      $('write-next').onclick=()=>{if(!writeCompleted)recordWriting(false);writingIndex++;renderWriting();};
+      $('write-home').onclick=()=>{++writeToken;writer?.cancelQuiz();writer=null;goHome();};
+    }
+
     renderLessons();
     bindEvents();
+    bindWriting();
     restoreState();
   </script>
 </body>
