@@ -435,6 +435,29 @@
 #write-canvas{width:min(310px,100%);height:310px;margin:16px auto;border:2px solid var(--border);border-radius:12px;touch-action:none;background:linear-gradient(90deg,transparent 49.8%,#e5e7eb 50%,transparent 50.2%),linear-gradient(transparent 49.8%,#e5e7eb 50%,transparent 50.2%);display:flex;justify-content:center;align-items:center}
 #write-canvas svg{touch-action:none}.write-answer{text-align:center;font-size:3rem}.write-answer small{display:block;font-size:1rem;color:var(--muted)}
 
+
+/* Escritura: interfaz compacta para celular */
+#screen-writing{padding:14px 16px}
+#screen-writing .topbar{margin-bottom:6px}
+#screen-writing .progress-text{margin-bottom:5px}
+#screen-writing .progress-bar{height:8px}
+#screen-writing .write-header{padding:4px 0 2px}
+#screen-writing .write-pinyin{font-size:clamp(1.55rem,5vw,1.9rem);line-height:1.15}
+#screen-writing .write-meaning{font-size:1.08rem;margin-top:2px}
+#screen-writing #write-status{margin:6px 0 4px;font-size:.9rem;line-height:1.3;min-height:1.2em}
+#screen-writing #write-canvas{width:min(260px,calc(100vw - 90px));height:min(260px,calc(100vw - 90px));margin:7px auto 10px}
+#screen-writing .write-controls{gap:7px;margin-top:7px}
+#screen-writing .write-controls button{padding:9px 12px;font-size:.9rem;border-radius:11px}
+#screen-writing #write-next{order:-1;background:#15803d;color:white}
+#screen-writing .write-answer{font-size:1.6rem;line-height:1.1}
+#screen-writing #write-dashboard{margin:12px 0 4px}
+#screen-writing #write-dashboard .summary-box{padding:10px}
+#screen-writing .footer-note{font-size:.8rem;margin-top:8px}
+@media(max-width:640px){
+ #screen-writing{padding:11px 12px}
+ #screen-writing .write-controls{justify-content:center}
+ #screen-writing .write-controls button{flex:0 1 auto}
+}
   </style>
 <script defer src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7/dist/hanzi-writer.min.js"></script>
 </head>
@@ -562,8 +585,8 @@
  <p id="write-status" class="subtitle" role="status" aria-live="polite">Dibujá los trazos en orden.</p>
  <div id="write-canvas" aria-label="Área para escribir el carácter chino"></div>
  <div id="write-answer" class="write-answer hidden"></div>
- <div class="controls"><button class="btn-primary" id="write-start">✍️ Escribir</button><button class="btn-secondary" id="write-hint">💡 Pista</button><button class="btn-secondary" id="write-animate">▶ Ver animación</button><button class="btn-secondary" id="write-retry">↻ Reintentar</button></div>
- <div class="controls"><button class="btn-secondary" id="write-reveal">👁 Mostrar carácter</button><button class="btn-success" id="write-next">Siguiente →</button><button class="btn-secondary" id="write-home">Volver al inicio</button></div>
+ <div class="controls write-controls"><button class="btn-success" id="write-next">Siguiente →</button><button class="btn-primary" id="write-start">✍️ Escribir</button><button class="btn-secondary" id="write-hint">💡 Pista</button><button class="btn-secondary" id="write-animate">▶ Ver animación</button><button class="btn-secondary" id="write-retry">↻ Reintentar</button></div>
+ <div class="controls write-controls"><button class="btn-secondary" id="write-reveal">👁 Mostrar carácter</button><button class="btn-secondary" id="write-home">Volver al inicio</button></div>
  <div class="summary-grid" id="write-dashboard"></div>
  <p class="footer-note">La corrección evalúa orden, dirección y aproximación de los trazos. La animación revela la solución. Se guarda el progreso localmente en este navegador.</p>
 </section>
@@ -2950,12 +2973,12 @@ updateExampleTranslationVisibility();
       $('write-pinyin').textContent=card.pinyin;$('write-meaning').textContent=card.meaning;
       $('write-count').textContent=`Carácter ${writingIndex+1} de ${writingDeck.length}`;
       $('write-progress').style.width=`${100*writingIndex/writingDeck.length}%`;
-      $('write-status').textContent='Escribí el carácter sin ver la solución. Se valida cada trazo.';
+      $('write-status').textContent='Dibujá los trazos en orden.';
       $('write-next').disabled=false;
       $('write-stats').textContent=`Intentos: ${writingProgress[card.hanzi]?.attempts||0}`;
       $('write-dashboard').innerHTML=`<div class="summary-box"><div class="summary-label">Practicados</div><div class="summary-value">${Object.keys(writingProgress).length}</div></div><div class="summary-box"><div class="summary-label">Perfectos</div><div class="summary-value">${Object.values(writingProgress).filter(v=>v.perfect>0).length}</div></div>`;
       if(typeof HanziWriter==='undefined'){$('write-status').textContent='No se pudo cargar Hanzi Writer. Revisá tu conexión a Internet.';return;}
-      writer=HanziWriter.create('write-canvas',card.hanzi,{width:300,height:300,padding:16,showOutline:false,showCharacter:false,strokeColor:'#2563eb',outlineColor:'#cbd5e1',highlightColor:'#16a34a',showHintAfterMisses:3, charDataLoader:(char,onLoad,onError)=>{
+      writer=HanziWriter.create('write-canvas',card.hanzi,{width:Math.min(260,Math.max(190,window.innerWidth-90)),height:Math.min(260,Math.max(190,window.innerWidth-90)),padding:12,showOutline:false,showCharacter:false,strokeColor:'#2563eb',outlineColor:'#cbd5e1',highlightColor:'#16a34a',showHintAfterMisses:3, charDataLoader:(char,onLoad,onError)=>{
         fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@latest/${encodeURIComponent(char)}.json`).then(r=>{if(!r.ok)throw Error('Sin datos');return r.json()}).then(data=>{if(token===writeToken)onLoad(data)}).catch(onError);
       },onLoadCharDataError:()=>{$('write-status').textContent='No se pudieron cargar los trazos de este carácter.';}});
       beginWriting();
@@ -2971,7 +2994,7 @@ updateExampleTranslationVisibility();
       if(!writer)return; writeMistakes=0;writeHints=0;writeAnimated=false;writeCompleted=false;
       $('write-answer').classList.add('hidden');
       writer.cancelQuiz();writer.hideCharacter();writer.hideOutline();
-      writer.quiz({showHintAfterMisses:3,onMistake:()=>{writeMistakes++;$('write-status').textContent=`Errores en este intento: ${writeMistakes}. Seguí probando.`;},onComplete:(summary)=>{
+      writer.quiz({showHintAfterMisses:3,onMistake:()=>{writeMistakes++;$('write-status').textContent=`Errores: ${writeMistakes}. Seguí probando.`;},onComplete:(summary)=>{
         if(writeCompleted)return;writeCompleted=true;recordWriting(true);
         $('write-status').textContent=`¡Correcto! ${writeMistakes} errores${writeAnimated?' · con animación':''}.`;
         $('write-answer').textContent=writingDeck[writingIndex].hanzi;
