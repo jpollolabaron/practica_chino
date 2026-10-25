@@ -2553,7 +2553,6 @@
             <input type="checkbox" value="${lesson.id}" ${state.selectedLessonIds.includes(lesson.id) ? "checked" : ""} />
             <div>
               <div class="lesson-title">${lesson.title}</div>
-              <div class="lesson-meta">${lesson.description}</div>
               <div class="lesson-meta">${lesson.items.length} ${noun}</div>
               ${lesson.preview ? `<div class="lesson-meta" style="margin-top:8px; line-height:1.45;">${lesson.preview}</div>` : ""}
             </div>
@@ -2952,10 +2951,36 @@ updateExampleTranslationVisibility();
     // Lecturas de los caracteres frecuentes incluidos en palabras compuestas.
     const READINGS = {'人':['rén','persona'],'大':['dà','grande'],'小':['xiǎo','pequeño'],'口':['kǒu','boca'],'日':['rì','día / sol'],'山':['shān','montaña'],'火':['huǒ','fuego'],'木':['mù','madera'],'土':['tǔ','tierra'],'中':['zhōng','centro'],'上':['shàng','arriba'],'下':['xià','abajo'],'个':['gè','clasificador'],'子':['zǐ','hijo / sufijo'],'天':['tiān','día / cielo'],'不':['bù','no'],'了':['le','partícula aspectual'],'本':['běn','clasificador de libros'],'学':['xué','estudiar'],'文':['wén','lengua / escritura'],'生':['shēng','nacer'],'时':['shí','tiempo'],'分':['fēn','minuto'],'关':['guān','cerrar'],'门':['mén','puerta'],'车':['chē','vehículo'],'马':['mǎ','caballo'],'牛':['niú','vaca'],'羊':['yáng','oveja'],'买':['mǎi','comprar'],'卖':['mài','vender'],'钱':['qián','dinero'],'爸':['bà','papá'],'妈':['mā','mamá'],'友':['yǒu','amigo'],'爱':['ài','amar'],'手':['shǒu','mano'],'目':['mù','ojo'],'耳':['ěr','oreja'],'心':['xīn','corazón'],'气':['qì','aire'],'雨':['yǔ','lluvia'],'电':['diàn','electricidad'],'话':['huà','palabra'],'脑':['nǎo','cerebro'],'工':['gōng','trabajo'],'老':['lǎo','viejo'],'师':['shī','maestro'],'朋':['péng','amigo']};
     WRITING_LESSONS.forEach(l=>l.items.forEach(it=>{if(READINGS[it.hanzi]) [it.pinyin,it.meaning]=READINGS[it.hanzi];}));
-    // Omitir lecturas no verificadas en caracteres provenientes de palabras compuestas.
-    WRITING_LESSONS.forEach(l=>l.items=l.items.filter(it=>it.pinyin && it.meaning));
-    const WRITING_VALID = WRITING_LESSONS.filter(l=>l.items.length);
-    WRITING_LESSONS.splice(0,WRITING_LESSONS.length,...WRITING_VALID);
+    // Reagrupar DESPUÉS de validar las lecturas: cada lección tiene 10 ejercicios reales.
+    const validWritingItems = WRITING_LESSONS.flatMap(l => l.items).filter(it => it.pinyin && it.meaning);
+    // Reserva de caracteres frecuentes, con lecturas individuales revisadas, para completar el último lote.
+    const EXTRA_WRITING = [
+      ['的','de','partícula posesiva'],['白','bái','blanco'],['百','bǎi','cien'],['千','qiān','mil'],
+      ['左','zuǒ','izquierda'],['右','yòu','derecha'],['男','nán','hombre'],['东','dōng','este'],
+      ['西','xī','oeste'],['北','běi','norte'],['南','nán','sur'],['早','zǎo','temprano'],
+      ['晚','wǎn','tarde / noche'],['高','gāo','alto'],['长','cháng','largo'],['短','duǎn','corto'],
+      ['新','xīn','nuevo'],['旧','jiù','viejo / usado'],['红','hóng','rojo'],['蓝','lán','azul'],
+      ['绿','lǜ','verde'],['黑','hēi','negro'],['狗','gǒu','perro'],['猫','māo','gato'],
+      ['鱼','yú','pez'],['鸟','niǎo','pájaro'],['走','zǒu','caminar'],['跑','pǎo','correr'],
+      ['跳','tiào','saltar'],['笑','xiào','reír'],['哭','kū','llorar'],['快','kuài','rápido'],
+      ['慢','màn','lento'],['冷','lěng','frío'],['热','rè','caliente'],['对','duì','correcto'],
+      ['错','cuò','incorrecto'],['穿','chuān','vestir / llevar puesto'],['等','děng','esperar'],
+      ['到','dào','llegar'],['得','dé','obtener'],['第','dì','prefijo ordinal']
+    ];
+    const usedWriting = new Set(validWritingItems.map(it => it.hanzi));
+    for (const [hanzi,pinyin,meaning] of EXTRA_WRITING) {
+      if (validWritingItems.length % 10 === 0) break;
+      if (!usedWriting.has(hanzi)) {
+        validWritingItems.push({id:`write-${hanzi}`,hanzi,pinyin,meaning,example_hanzi:''});
+        usedWriting.add(hanzi);
+      }
+    }
+    WRITING_LESSONS.length = 0;
+    for (let i=0;i<validWritingItems.length;i+=10) {
+      const items = validWritingItems.slice(i,i+10);
+      if (items.length !== 10) break;
+      WRITING_LESSONS.push({id:`write-${i/10+1}`,title:`Escritura · Lección ${i/10+1}`,description:'',preview:items.map(it=>it.hanzi).join(' · '),items});
+    }
     const WRITE_STORAGE='hsk1_writing_progress_v1';
     let writingDeck=[],writingIndex=0,writer=null,writeMistakes=0,writeHints=0,writeAnimated=false,writeCompleted=false,writeToken=0;
     let writingProgress={};
