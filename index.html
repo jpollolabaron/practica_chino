@@ -585,7 +585,7 @@
  <p id="write-status" class="subtitle" role="status" aria-live="polite">Dibujá los trazos en orden.</p>
  <div id="write-canvas" aria-label="Área para escribir el carácter chino"></div>
  <div id="write-answer" class="write-answer hidden"></div>
- <div class="controls write-controls"><button class="btn-success" id="write-next">Siguiente →</button><button class="btn-primary" id="write-start">✍️ Escribir</button><button class="btn-secondary" id="write-hint">💡 Pista</button><button class="btn-secondary" id="write-animate">▶ Ver animación</button><button class="btn-secondary" id="write-retry">↻ Reintentar</button></div>
+ <div class="controls write-controls"><button class="btn-success" id="write-next">Siguiente →</button><button class="btn-secondary" id="write-mark" type="button" aria-pressed="false">☆ Marcar para repasar</button><button class="btn-primary" id="write-start">✍️ Escribir</button><button class="btn-secondary" id="write-hint">💡 Pista</button><button class="btn-secondary" id="write-animate">▶ Ver animación</button><button class="btn-secondary" id="write-retry">↻ Reintentar</button></div>
  <div class="controls write-controls"><button class="btn-secondary" id="write-reveal">👁 Mostrar carácter</button><button class="btn-secondary" id="write-home">Volver al inicio</button></div>
  <div class="summary-grid" id="write-dashboard"></div>
  <p class="footer-note">La corrección evalúa orden, dirección y aproximación de los trazos. La animación revela la solución. Se guarda el progreso localmente en este navegador.</p>
@@ -2783,6 +2783,7 @@ updateExampleTranslationVisibility();
     }
 
     function renderSummary() {
+      writingSummaryActive=false;$("btn-review").textContent="Repasar pendientes";
       $("sum-total").textContent = state.stats.total;
       $("sum-correct").textContent = state.stats.correct;
       $("sum-review").textContent = state.reviewQueue.length;
@@ -2897,7 +2898,7 @@ updateExampleTranslationVisibility();
       });
       $("btn-knew").addEventListener("click", () => answerCard(true));
       $("btn-didnt-know").addEventListener("click", () => answerCard(false));
-      $("btn-review").addEventListener("click", startReview);
+      $("btn-review").addEventListener("click", () => writingSummaryActive ? startWritingReview() : startReview());
       $("btn-restart-lessons").addEventListener("click", restartLessons);
       $("btn-reset-session").addEventListener("click", resetCurrentSession);
       $("btn-back-home").addEventListener("click", goHome);
@@ -2981,12 +2982,14 @@ updateExampleTranslationVisibility();
       if (items.length !== 10) break;
       WRITING_LESSONS.push({id:`write-${i/10+1}`,title:`Escritura · Lección ${i/10+1}`,description:'',preview:items.map(it=>it.hanzi).join(' · '),items});
     }
+    let writingSummaryActive=false, writingReviewMode=false, writingRoundErrors=new Set();
     const WRITE_STORAGE='hsk1_writing_progress_v1';
     let writingDeck=[],writingIndex=0,writer=null,writeMistakes=0,writeHints=0,writeAnimated=false,writeCompleted=false,writeToken=0;
     let writingProgress={};
     try { writingProgress=JSON.parse(localStorage.getItem(WRITE_STORAGE)||'{}')||{}; }catch(e){writingProgress={};}
     function persistWriting(){try{localStorage.setItem(WRITE_STORAGE,JSON.stringify(writingProgress));}catch(e){console.warn(e);}}
     function startWriting(deck,lessonIds){
+      writingSummaryActive=false; writingReviewMode=false; writingRoundErrors=new Set();
       state.selectedLessonIds=[...lessonIds]; writingDeck=[...deck]; writingIndex=0;
       showScreen('screen-writing'); renderWriting();
     }
@@ -3001,6 +3004,7 @@ updateExampleTranslationVisibility();
       $('write-status').textContent='Dibujá los trazos en orden.';
       $('write-next').disabled=false;
       $('write-stats').textContent=`Intentos: ${writingProgress[card.hanzi]?.attempts||0}`;
+      updateWritingMark();
       $('write-dashboard').innerHTML=`<div class="summary-box"><div class="summary-label">Practicados</div><div class="summary-value">${Object.keys(writingProgress).length}</div></div><div class="summary-box"><div class="summary-label">Perfectos</div><div class="summary-value">${Object.values(writingProgress).filter(v=>v.perfect>0).length}</div></div>`;
       if(typeof HanziWriter==='undefined'){$('write-status').textContent='No se pudo cargar Hanzi Writer. Revisá tu conexión a Internet.';return;}
       writer=HanziWriter.create('write-canvas',card.hanzi,{width:Math.min(260,Math.max(190,window.innerWidth-90)),height:Math.min(260,Math.max(190,window.innerWidth-90)),padding:12,showOutline:false,showCharacter:false,strokeColor:'#2563eb',outlineColor:'#cbd5e1',highlightColor:'#16a34a',showHintAfterMisses:3, charDataLoader:(char,onLoad,onError)=>{
@@ -3008,10 +3012,33 @@ updateExampleTranslationVisibility();
       },onLoadCharDataError:()=>{$('write-status').textContent='No se pudieron cargar los trazos de este carácter.';}});
       beginWriting();
     }
+    function updateWritingMark(){
+      const c=writingDeck[writingIndex];if(!c)return;
+      const marked=!!writingProgress[c.hanzi]?.marked;
+      $('write-mark').textContent=marked?'★ Marcado para repasar':'☆ Marcar para repasar';
+      $('write-mark').setAttribute('aria-pressed',String(marked));
+    }
+    function setWritingMark(marked){
+      const c=writingDeck[writingIndex];if(!c)return;
+      const p=writingProgress[c.hanzi]||{attempts:0,perfect:0,mistakes:0,hints:0};
+      p.marked=marked;writingProgress[c.hanzi]=p;persistWriting();updateWritingMark();
+    }
+    function writingPending(){
+      return writingDeck.filter(c=>writingProgress[c.hanzi]?.marked || writingRoundErrors.has(c.hanzi));
+    }
+    function startWritingReview(){
+      const pending=writingPending();if(!pending.length)return;
+      writingReviewMode=true;writingSummaryActive=false;writingRoundErrors=new Set();
+      writingDeck=pending;writingIndex=0;showScreen('screen-writing');renderWriting();
+    }
     function recordWriting(completed){
       const c=writingDeck[writingIndex];if(!c)return;
       const p=writingProgress[c.hanzi]||{attempts:0,perfect:0,mistakes:0,hints:0};
       p.attempts++;p.mistakes+=writeMistakes;p.hints+=writeHints;
+      if(!completed || writeMistakes>=2 || writeHints>0 || writeAnimated){
+        writingRoundErrors.add(c.hanzi);
+        p.marked=true;
+      }
       if(completed && !writeMistakes && !writeHints && !writeAnimated)p.perfect++;
       p.last=new Date().toISOString();writingProgress[c.hanzi]=p;persistWriting();
     }
@@ -3028,21 +3055,24 @@ updateExampleTranslationVisibility();
     }
     function finishWriting(){
       ++writeToken;writer=null;showScreen('screen-summary');
-      $('summary-title').textContent='Práctica de escritura terminada';
+      writingSummaryActive=true;
+      $('summary-title').textContent=writingReviewMode?'Repaso de escritura terminado':'Práctica de escritura terminada';
       $('summary-text').textContent=`Completaste ${writingDeck.length} caracteres. Tus resultados quedaron guardados en este navegador.`;
       $('sum-total').textContent=writingDeck.length;
       $('sum-correct').textContent=writingDeck.filter(c=>writingProgress[c.hanzi]?.perfect).length;
-      $('sum-review').textContent=writingDeck.filter(c=>!writingProgress[c.hanzi]?.perfect).length;
-      $('btn-review').disabled=true;
+      $('sum-review').textContent=writingPending().length;
+      $('btn-review').disabled=writingPending().length===0;
+      $('btn-review').textContent='Repasar pendientes';
     }
     function bindWriting(){
+      $('write-mark').onclick=()=>setWritingMark(!writingProgress[writingDeck[writingIndex]?.hanzi]?.marked);
       $('write-start').onclick=()=>beginWriting();
       $('write-retry').onclick=()=>{if(writer){if(!writeCompleted)recordWriting(false);beginWriting();}};
       $('write-hint').onclick=()=>{if(writer){writeHints++;writer.showOutline();$('write-status').textContent='Pista: se muestra el contorno del carácter.';}};
       $('write-animate').onclick=()=>{if(writer){writeAnimated=true;writer.cancelQuiz();writer.showCharacter();writer.animateCharacter({onComplete:()=>{$('write-status').textContent='Animación terminada. Presioná «Escribir» para practicar de nuevo.';}});}};
       $('write-reveal').onclick=()=>{if(writer){writeAnimated=true;writer.cancelQuiz();writer.showCharacter();$('write-answer').textContent=writingDeck[writingIndex].hanzi;$('write-answer').classList.remove('hidden');$('write-status').textContent='Solución revelada. Podés reintentar o pasar al siguiente.';}};
       $('write-next').onclick=()=>{if(!writeCompleted)recordWriting(false);writingIndex++;renderWriting();};
-      $('write-home').onclick=()=>{++writeToken;writer?.cancelQuiz();writer=null;goHome();};
+      $('write-home').onclick=()=>{writingSummaryActive=false;++writeToken;writer?.cancelQuiz();writer=null;goHome();};
     }
 
     renderLessons();
