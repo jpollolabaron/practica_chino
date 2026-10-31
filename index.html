@@ -4768,8 +4768,9 @@ function updateExampleTranslationVisibility() {
   const btn = $("btn-toggle-example-translation");
   const hidden = !state.exampleTranslationVisible;
 
-  // En HSK 1, el pinyin del ejemplo queda visible; el ojo controla solo el español.
-  pinyinEl.classList.remove("hidden-text");
+  // En vocabulario, el botón de pinyin controla también la oración de ejemplo.
+  // En los demás modos, el pinyin del ejemplo sigue visible.
+  pinyinEl.classList.toggle("hidden-text", state.practiceType === "vocab" && !state.vocabPinyinVisible);
   esEl.classList.toggle("hidden-text", hidden);
   btn.textContent = hidden ? "👁" : "🙈";
   btn.setAttribute("aria-pressed", String(!hidden));
