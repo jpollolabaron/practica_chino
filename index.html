@@ -526,6 +526,10 @@
         </select>
       </div>
 
+      <div id="vocab-pinyin-controls" class="controls" style="margin:0 0 12px;">
+        <button id="btn-toggle-vocab-pinyin" class="btn-secondary" type="button" aria-pressed="true">🙈 Ocultar pinyin</button>
+      </div>
+
       <div id="flashcard" class="card">
         <div id="card-visual-zone">
           <div id="hanzi" class="hanzi">你</div>
@@ -2572,7 +2576,7 @@
           "id": "write-么",
           "hanzi": "么",
           "pinyin": "me",
-          "meaning": "parte de 什么 / 怎么"
+          "meaning": "parte de shénme"
         },
         {
           "id": "write-好",
@@ -2619,7 +2623,7 @@
           "id": "write-什",
           "hanzi": "什",
           "pinyin": "shén",
-          "meaning": "parte de 什么 (qué)"
+          "meaning": "parte de shénme (qué)"
         }
       ]
     },
@@ -2630,10 +2634,11 @@
       "preview": "就 · 会 · 到 · 没 · 吗 · 去 · 说 · 想 · 上 · 为",
       "items": [
         {
-          "id": "write-就",
-          "hanzi": "就",
-          "pinyin": "jiù",
-          "meaning": "entonces / enseguida"
+          "id": "write-她",
+          "hanzi": "她",
+          "pinyin": "tā",
+          "meaning": "ella",
+          "example_hanzi": "她是学生。"
         },
         {
           "id": "write-会",
@@ -2643,10 +2648,11 @@
           "example_hanzi": "我会说汉语。"
         },
         {
-          "id": "write-到",
-          "hanzi": "到",
-          "pinyin": "dào",
-          "meaning": "llegar"
+          "id": "write-里",
+          "hanzi": "里",
+          "pinyin": "lǐ",
+          "meaning": "dentro / en",
+          "example_hanzi": "杯子里有水。"
         },
         {
           "id": "write-没",
@@ -2676,11 +2682,11 @@
           "example_hanzi": "我会说汉语。"
         },
         {
-          "id": "write-想",
-          "hanzi": "想",
-          "pinyin": "xiǎng",
-          "meaning": "querer / pensar",
-          "example_hanzi": "我想喝茶。"
+          "id": "write-很",
+          "hanzi": "很",
+          "pinyin": "hěn",
+          "meaning": "muy",
+          "example_hanzi": "她很好。"
         },
         {
           "id": "write-上",
@@ -2690,10 +2696,10 @@
           "example_hanzi": "我上午学习汉语。"
         },
         {
-          "id": "write-为",
-          "hanzi": "为",
-          "pinyin": "wèi",
-          "meaning": "por / para"
+          "id": "write-得",
+          "hanzi": "得",
+          "pinyin": "de",
+          "meaning": "partícula de complemento"
         }
       ]
     },
@@ -2711,10 +2717,11 @@
           "example_hanzi": "我能坐这儿吗？"
         },
         {
-          "id": "write-道",
-          "hanzi": "道",
-          "pinyin": "dào",
-          "meaning": "parte de 知道 (saber)"
+          "id": "write-都",
+          "hanzi": "都",
+          "pinyin": "dōu",
+          "meaning": "todos / ambos",
+          "example_hanzi": "我们都是学生。"
         },
         {
           "id": "write-看",
@@ -2736,31 +2743,29 @@
           "meaning": "poder / posible"
         },
         {
-          "id": "write-她",
-          "hanzi": "她",
-          "pinyin": "tā",
-          "meaning": "ella",
-          "example_hanzi": "她是学生。"
+          "id": "write-就",
+          "hanzi": "就",
+          "pinyin": "jiù",
+          "meaning": "entonces / enseguida"
         },
         {
-          "id": "write-里",
-          "hanzi": "里",
-          "pinyin": "lǐ",
-          "meaning": "dentro / en",
-          "example_hanzi": "杯子里有水。"
+          "id": "write-到",
+          "hanzi": "到",
+          "pinyin": "dào",
+          "meaning": "llegar"
         },
         {
-          "id": "write-很",
-          "hanzi": "很",
-          "pinyin": "hěn",
-          "meaning": "muy",
-          "example_hanzi": "她很好。"
+          "id": "write-想",
+          "hanzi": "想",
+          "pinyin": "xiǎng",
+          "meaning": "querer / pensar",
+          "example_hanzi": "我想喝茶。"
         },
         {
-          "id": "write-得",
-          "hanzi": "得",
-          "pinyin": "de",
-          "meaning": "partícula de complemento"
+          "id": "write-为",
+          "hanzi": "为",
+          "pinyin": "wèi",
+          "meaning": "por / para"
         },
         {
           "id": "write-以",
@@ -2790,11 +2795,10 @@
           "meaning": "asunto / cosa"
         },
         {
-          "id": "write-都",
-          "hanzi": "都",
-          "pinyin": "dōu",
-          "meaning": "todos / ambos",
-          "example_hanzi": "我们都是学生。"
+          "id": "write-道",
+          "hanzi": "道",
+          "pinyin": "dào",
+          "meaning": "parte de 知道 (saber)"
         },
         {
           "id": "write-生",
@@ -4550,6 +4554,7 @@
 
     const state = {
       practiceType: "vocab",
+      vocabPinyinVisible: true,
       selectedLessonIds: [],
       originalDeck: [],
       queue: [],
@@ -4779,11 +4784,16 @@ function updateExampleTranslationVisibility() {
 
       const hanziFront = $("hanzi");
       hanziFront.textContent = state.currentCard.hanzi;
-      // En HSK 1 el frente siempre muestra hanzi + pinyin.
+      // En vocabulario se puede ocultar el pinyin del frente; en frases sigue visible.
       const pinyinFront = document.createElement("span");
       pinyinFront.className = "hanzi-front-pinyin";
       pinyinFront.textContent = state.currentCard.pinyin;
+      pinyinFront.classList.toggle("hidden", state.practiceType === "vocab" && !state.vocabPinyinVisible);
       hanziFront.appendChild(pinyinFront);
+      $("vocab-pinyin-controls").classList.toggle("hidden", state.practiceType !== "vocab");
+      const togglePinyin = $("btn-toggle-vocab-pinyin");
+      togglePinyin.textContent = state.vocabPinyinVisible ? "🙈 Ocultar pinyin" : "👁 Mostrar pinyin";
+      togglePinyin.setAttribute("aria-pressed", String(state.vocabPinyinVisible));
 
       $("card-visual-zone").classList.toggle("hidden", state.practiceType === "audio");
       $("detail-answer-hanzi").textContent = state.currentCard.hanzi;
@@ -4806,7 +4816,7 @@ updateExampleTranslationVisibility();
       $("tap-hint").textContent = state.practiceType === "audio"
         ? "Escuchá el audio, tratá de reconocer la frase y luego hacé clic en “Mostrar respuesta”."
         : (state.practiceType === "vocab"
-          ? "Reconocé la palabra por el hanzi y el pinyin, escuchala si querés y luego mostrá el significado."
+          ? (state.vocabPinyinVisible ? "Reconocé la palabra por el hanzi y el pinyin, escuchala si querés y luego mostrá el significado." : "Reconocé la palabra solo por el hanzi; podés mostrar el pinyin o consultar la respuesta.")
           : "Leé el hanzi y el pinyin, escuchá el audio si querés y luego hacé clic en “Mostrar respuesta”.");
 
       const total = state.queue.length;
@@ -4946,6 +4956,11 @@ updateExampleTranslationVisibility();
           state.selectedLessonIds = [];
           renderLessons();
         });
+      });
+
+      $("btn-toggle-vocab-pinyin").addEventListener("click", () => {
+        state.vocabPinyinVisible = !state.vocabPinyinVisible;
+        renderCurrentCard();
       });
 
       $("audio-speed-select").addEventListener("change", (event) => {
